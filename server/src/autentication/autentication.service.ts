@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAutenticationDto } from './dto/create-autentication.dto';
-import { UpdateAutenticationDto } from './dto/update-autentication.dto';
+import { RegistroDto } from './dto/registro.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AutenticationService {
-  create(createAutenticationDto: CreateAutenticationDto) {
+  crearUsuario(registroDto: RegistroDto) {
     return 'This action adds a new autentication';
+  }
+
+  validarUsuario(loginDto: LoginDto){
+    return "Hay que validar";
   }
 
   findAll() {
@@ -16,9 +20,7 @@ export class AutenticationService {
     return `This action returns a #${id} autentication`;
   }
 
-  update(id: number, updateAutenticationDto: UpdateAutenticationDto) {
-    return `This action updates a #${id} autentication`;
-  }
+
 
   remove(id: number) {
     return `This action removes a #${id} autentication`;

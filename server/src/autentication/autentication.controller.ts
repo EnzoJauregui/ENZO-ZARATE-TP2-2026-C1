@@ -1,34 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AutenticationService } from './autentication.service';
-import { CreateAutenticationDto } from './dto/create-autentication.dto';
-import { UpdateAutenticationDto } from './dto/update-autentication.dto';
+import { RegistroDto } from './dto/registro.dto';
+import { LoginDto } from './dto/login.dto';
+
 
 @Controller('autentication')
 export class AutenticationController {
   constructor(private readonly autenticationService: AutenticationService) {}
 
-  @Post()
-  create(@Body() createAutenticationDto: CreateAutenticationDto) {
-    return this.autenticationService.create(createAutenticationDto);
+  @Post('/registro')
+  create(@Body() registroDto: RegistroDto) {
+    return this.autenticationService.crearUsuario(registroDto);
   }
 
-  @Get()
-  findAll() {
-    return this.autenticationService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.autenticationService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAutenticationDto: UpdateAutenticationDto) {
-    return this.autenticationService.update(+id, updateAutenticationDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.autenticationService.remove(+id);
+  @Post('/login')
+  verificarUsuario(@Body() loginDto: LoginDto) {
+    return this.autenticationService.validarUsuario(loginDto);
   }
 }
