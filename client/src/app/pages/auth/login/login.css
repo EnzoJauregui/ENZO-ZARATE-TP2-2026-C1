@@ -1,0 +1,12 @@
+.input-error {
+    border: 2px solid #ff4d4d;
+    background-color: #fff0f0;
+}
+
+.error-text {
+    color: #701616;
+    font-size: 0.75rem;
+}
+.card, input{
+    background-color: rgb(142, 141, 144);
+}

@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: "Moderna / Neo-Gaming", cursive;
+  letter-spacing: 2px;
+  background-color: rgb(93, 93, 100);
+}

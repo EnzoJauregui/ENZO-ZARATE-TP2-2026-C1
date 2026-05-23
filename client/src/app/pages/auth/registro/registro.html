@@ -1,1 +1,232 @@
-<p>registro works!</p>
+<div class="container my-5 d-flex justify-content-center">
+  <div class="card shadow-sm p-4 w-100" style="max-width: 750px; border-radius: 16px">
+    <h2 class="text-center mb-2 fw-bold text-dark">Crear Cuenta</h2>
+
+    <form [formGroup]="formulario" (ngSubmit)="accion()">
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Nombre</label>
+          <input
+            type="text"
+            class="form-fluid form-control"
+            [class.input-error]="
+              formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched
+            "
+            formControlName="nombre"
+            placeholder="Ej: Raul"
+          />
+          @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('nombre')?.errors?.['required']) {
+                <span>El nombre es obligatorio</span>
+              }
+            </div>
+          }
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Apellido</label>
+          <input
+            type="text"
+            class="form-control"
+            [class.input-error]="
+              formulario.get('apellido')?.invalid && formulario.get('apellido')?.touched
+            "
+            formControlName="apellido"
+            placeholder="Ej: Garcia"
+          />
+          @if (formulario.get('apellido')?.invalid && formulario.get('apellido')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('apellido')?.errors?.['required']) {
+                <span>El apellido es obligatorio</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            [class.input-error]="
+              formulario.get('email')?.invalid && formulario.get('email')?.touched
+            "
+            formControlName="email"
+            placeholder="correo@ejemplo.com"
+          />
+          @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('email')?.errors?.['required']) {
+                <span>El email es obligatorio</span>
+              }
+              @if (formulario.get('email')?.errors?.['email']) {
+                <span>Formato invalido</span>
+              }
+            </div>
+          }
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Nombre de Usuario (Username)</label>
+          <input
+            type="text"
+            class="form-control"
+            [class.input-error]="
+              formulario.get('username')?.invalid && formulario.get('username')?.touched
+            "
+            formControlName="username"
+            placeholder="usuario123"
+          />
+          @if (formulario.get('username')?.invalid && formulario.get('username')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('username')?.errors?.['required']) {
+                <span>El username es obligatorio</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            [class.input-error]="
+              formulario.get('password')?.invalid && formulario.get('password')?.touched
+            "
+            formControlName="password"
+            placeholder="********"
+          />
+          @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('password')?.errors?.['required']) {
+                <span>Contraseña obligatoria</span>
+              } @else if (formulario.get('password')?.errors?.['minlength']) {
+                <span>Minimo 8 caracteres</span>
+              } @else if (formulario.get('password')?.errors?.['pattern']) {
+                <span>Debe tener almenos una letra mayuscula y un numero</span>
+              }
+            </div>
+          }
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Repetir Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            [class.input-error]="
+              formulario.get('repetirPassword')?.invalid && formulario.get('repetirPassword')?.touched
+            "
+            formControlName="repetirPassword"
+            placeholder="********"
+          />
+          @if (
+            formulario.get('repetirPassword')?.invalid && formulario.get('repetirPassword')?.touched
+          ) {
+            <div class="error-text">
+              @if (formulario.get('repetirPassword')?.errors?.['required']) {
+                <span>Contraseña obligatoria</span>
+              } @else if (formulario.get('repetirPassword')?.errors?.['minlength']) {
+                <span>Minimo 8 caracteres</span>
+              } @else if (formulario.get('repetirPassword')?.errors?.['pattern']) {
+                <span>Debe tener almenos una letra mayuscula y un numero</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Fecha de Nacimiento</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="fechaNacimiento"
+            [class.input-error]="
+              formulario.get('fechaNacimiento')?.invalid &&
+              formulario.get('fechaNacimiento')?.touched
+            "
+          />
+          @if (
+            formulario.get('fechaNacimiento')?.invalid && formulario.get('fechaNacimiento')?.touched
+          ) {
+            <div class="error-text">
+              @if (formulario.get('fechaNacimiento')?.errors?.['required']) {
+                <span>La fecha de nacimiento es obligatoria</span>
+              }
+            </div>
+          }
+          <div class="col-md-6">
+            <label class="form-label fw-semibold small">Tipo de Perfil</label>
+            <select
+              class="form-select"
+              formControlName="perfil"
+              [class.input-error]="
+                formulario.get('perfil')?.invalid && formulario.get('perfil')?.touched
+              "
+            >
+              <option value="usuario">Usuario</option>
+              <option value="administrador">Administrador</option>
+            </select>
+            @if (formulario.get('perfil')?.invalid && formulario.get('perfil')?.touched) {
+              <div class="error-text">
+                @if (formulario.get('perfil')?.errors?.['required']) {
+                  <span>El tipo de perfil es obligatorio</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold small">Foto de Perfil</label>
+          <input type="file" class="form-control" accept="image/*" />
+          <div class="form-text">Formatos recomendados: JPG, PNG.</div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold small">Biografia / Descripcion breve</label>
+          <textarea
+            class="form-control"
+            rows="3"
+            [class.input-error]="
+              formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched
+            "
+            formControlName="descripcion"
+            placeholder="Contanos un poco sobre vos (max. 150 caracteres)..."
+          ></textarea>
+          @if (formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('descripcion')?.errors?.['required']) {
+                <span>La descripcion es obligatoria</span>
+              } @else if (formulario.get('descripcion')?.errors?.['maxLength']) {
+                <span>Maximo 150 caracteres</span>
+              }
+            </div>
+          }
+        </div>
+
+        <button type="submit" class="btn btn-dark w-100 py-2.5 fw-bold mb-3">Registrarse</button>
+
+        <p class="text-center mb-0 small text-muted">
+          ¿Ya tenes una cuenta?
+          <button routerLink="/auth/login" class="btn btn-sm btn-secondary">
+            Inicia sesion aca
+          </button>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-modal
+  tituloModal="Error"
+  [textoModal]="mensajeError()"
+  [flagModalBoton]="false"
+  [flagAbrir]="mostrarModal()"
+  (cerrarModal)="mostrarModal.set(false)"
+></app-modal>

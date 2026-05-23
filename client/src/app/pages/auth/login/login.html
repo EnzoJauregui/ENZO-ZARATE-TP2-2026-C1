@@ -1,1 +1,84 @@
-<p>login works!</p>
+<div class="container my-5 d-flex justify-content-center">
+  <div class="card shadow-sm p-4 w-100" style="max-width: 750px; border-radius: 16px">
+    <h2 class="text-center mb-2 fw-bold text-dark">Ingresar Cuenta</h2>
+
+    <form [formGroup]="formulario" (ngSubmit)="accion()">
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            [class.input-error]="
+              formulario.get('email')?.invalid && formulario.get('email')?.touched
+            "
+            formControlName="email"
+            placeholder="correo@ejemplo.com"
+          />
+          @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('email')?.errors?.['required']) {
+                <span>El email es obligatorio</span>
+              }
+              @if (formulario.get('email')?.errors?.['email']) {
+                <span>Formato invalido</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold small">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            [class.input-error]="
+              formulario.get('password')?.invalid && formulario.get('password')?.touched
+            "
+            formControlName="password"
+            placeholder="********"
+          />
+          @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
+            <div class="error-text">
+              @if (formulario.get('password')?.errors?.['required']) {
+                <span>Contraseña obligatoria</span>
+              } @else if (formulario.get('password')?.errors?.['minlength']) {
+                <span>Minimo 8 caracteres</span>
+              } @else if (formulario.get('password')?.errors?.['pattern']) {
+                <span>Debe tener almenos una letra mayuscula y un numero</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          (click)="rellenarFormulario()"
+        >
+          <small>Acceso rapido</small>
+        </button>
+      </div>
+
+      <button type="submit" class="btn btn-dark w-100 py-2.5 fw-bold mb-3">Ingresar</button>
+
+      <p class="text-center mb-0 small text-muted">
+        ¿Nuevo?
+        <button type="button" routerLink="/auth/registro" class="btn btn-sm btn-secondary">
+          Crea tu cuenta
+        </button>
+      </p>
+    </form>
+  </div>
+</div>
+
+<app-modal
+  tituloModal="Error"
+  [textoModal]="mensajeError()"
+  [flagModalBoton]="false"
+  [flagAbrir]="mostrarModal()"
+  (cerrarModal)="mostrarModal.set(false)"
+></app-modal>

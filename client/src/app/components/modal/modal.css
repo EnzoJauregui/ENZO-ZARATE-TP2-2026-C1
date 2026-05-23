@@ -1,0 +1,33 @@
+.modal-content {
+  border: 3px solid black;
+  border-radius: 15px;
+  transition: transform .5s;
+  box-shadow: 5px 5px 0px black;
+}
+
+.modal-content:hover {
+  transform: translate(-5px, -5px); 
+  box-shadow: 8px 8px 0px black;
+  background-color: antiquewhite;
+}
+
+button {
+  background-color: #00d1b2; 
+  color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 0 4px 0 black;
+  transition: transform .5s;
+  width: 25%;
+}
+
+button:hover{
+    transform: translate(-2px, -2px); 
+    box-shadow: 8px 8px 0px black;
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 black;
+  background-color: red;
+}

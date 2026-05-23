@@ -1,1 +1,24 @@
-<p>modal works!</p>
+<div class="modal fade" 
+    [class.show] = "flagAbrir()" 
+    [style.display]="flagAbrir() ? 'block' : 'none'"
+    tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">{{tituloModal()}}</h1>
+        @if(flagModalBoton()){
+          <button type="button" class="btn-close" (click)="close()"></button>
+        }
+      </div>
+      <div class="modal-body">
+        {{textoModal()}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">{{flagModalBoton() ?'No':'ok'}}</button>
+        @if(flagModalBoton()){
+          <button type="button" class="btn btn-primary" (click)="confirmar()">SI</button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
