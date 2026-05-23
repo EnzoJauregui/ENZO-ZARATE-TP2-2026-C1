@@ -203,7 +203,7 @@
             <div class="error-text">
               @if (formulario.get('descripcion')?.errors?.['required']) {
                 <span>La descripcion es obligatoria</span>
-              } @else if (formulario.get('descripcion')?.errors?.['maxLength']) {
+              } @else if (formulario.get('descripcion')?.errors?.['maxlength']) {
                 <span>Maximo 150 caracteres</span>
               }
             </div>
