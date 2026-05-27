@@ -1,7 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Modal } from '../../../components/modal/modal';
+import { AuthService } from '../../../services/auth.service';
+import { AuthLogin } from '../auth-interfaces/authLogin.interface';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +12,7 @@ import { Modal } from '../../../components/modal/modal';
   styleUrl: './login.css',
 })
 export class Login {
+  auth = inject(AuthService);
   mensajeError= signal<string>("Algo ocurrio");
   mostrarModal = signal<boolean>(false);
 
@@ -27,6 +30,12 @@ export class Login {
     });
   }  
   accion(){
-    console.log("login");
+    if(this.formulario.invalid) return;
+    try{
+      this.auth.login(this.formulario.value as AuthLogin);
+    } catch (e: any){
+      this.mensajeError.set(e.message);
+      this.mostrarModal.set(true);
+    }
   }
 }

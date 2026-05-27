@@ -133,6 +133,8 @@
                 <span>Minimo 8 caracteres</span>
               } @else if (formulario.get('repetirPassword')?.errors?.['pattern']) {
                 <span>Debe tener almenos una letra mayuscula y un numero</span>
+              } @else if(this.verificarConstrasenias()){
+                <span>Las contrasenias no coinciden</span>
               }
             </div>
           }
@@ -145,21 +147,22 @@
           <input
             type="date"
             class="form-control"
-            formControlName="fechaNacimiento"
+            formControlName="fecha_nacimiento"
             [class.input-error]="
-              formulario.get('fechaNacimiento')?.invalid &&
-              formulario.get('fechaNacimiento')?.touched
+              formulario.get('fecha_nacimiento')?.invalid &&
+              formulario.get('fecha_nacimiento')?.touched
             "
           />
           @if (
-            formulario.get('fechaNacimiento')?.invalid && formulario.get('fechaNacimiento')?.touched
+            formulario.get('fecha_nacimiento')?.invalid && formulario.get('fecha_nacimiento')?.touched
           ) {
             <div class="error-text">
-              @if (formulario.get('fechaNacimiento')?.errors?.['required']) {
+              @if (formulario.get('fecha_nacimiento')?.errors?.['required']) {
                 <span>La fecha de nacimiento es obligatoria</span>
               }
             </div>
           }
+          </div>
           <div class="col-md-6">
             <label class="form-label fw-semibold small">Tipo de Perfil</label>
             <select
@@ -180,11 +183,11 @@
               </div>
             }
           </div>
-        </div>
+        
 
         <div class="mb-3">
           <label class="form-label fw-semibold small">Foto de Perfil</label>
-          <input type="file" class="form-control" accept="image/*" />
+          <input type="file"  accept="image/*" />
           <div class="form-text">Formatos recomendados: JPG, PNG.</div>
         </div>
 

@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: "https://produccion.com",
+    apiUrl: "https://enzo-zarate-tp-2-2026-c1.vercel.app",
 };
