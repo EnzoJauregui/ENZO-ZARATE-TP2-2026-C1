@@ -63,7 +63,8 @@
         </button>
       </div>
 
-      <button type="submit" class="btn btn-dark w-100 py-2.5 fw-bold mb-3">Ingresar</button>
+      <button type="submit" class="btn btn-dark w-100 py-2.5 fw-bold mb-3" [disabled]="!formulario.valid">
+          {{ formulario.valid ? 'Ingresar' : 'Completa los datos' }}</button>
 
       <p class="text-center mb-0 small text-muted">
         ¿Nuevo?

@@ -14,7 +14,7 @@ import { AuthService } from '../../../services/auth.service';
 export class Registro {
   auth = inject(AuthService);
   mensajeError = signal<string>("Error");
-  mostrarModal = signal<boolean>(true);
+  mostrarModal = signal<boolean>(false);
 
   formulario = new FormGroup({
     email: new FormControl("", [Validators.email, Validators.required]),
@@ -45,7 +45,7 @@ export class Registro {
   }
   
   accion(){
-    if(this.formulario.invalid || this.verificarConstrasenias()) return true;
+    if(this.formulario.invalid || this.verificarConstrasenias()) return;
     
     const { repetirPassword, ...datosRegistro } = this.formulario.value;
     try{

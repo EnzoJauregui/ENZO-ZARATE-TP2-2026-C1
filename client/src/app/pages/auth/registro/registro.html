@@ -213,7 +213,8 @@
           }
         </div>
 
-        <button type="submit" class="btn btn-dark w-100 py-2.5 fw-bold mb-3">Registrarse</button>
+        <button type="submit" class="btn btn-dark w-100 py-2.5 fw-bold mb-3" [disabled]="!formulario.valid">
+          {{ formulario.valid ? 'Registrarse' : 'Completa los datos' }}</button>
 
         <p class="text-center mb-0 small text-muted">
           ¿Ya tenes una cuenta?
