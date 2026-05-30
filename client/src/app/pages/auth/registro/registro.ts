@@ -22,7 +22,7 @@ export class Registro {
     apellido: new FormControl("", [Validators.required]),
     username: new FormControl("", [Validators.required]),
     fecha_nacimiento: new FormControl("", [Validators.required]),
-    perfil: new FormControl("", [Validators.required]),
+    perfil: new FormControl("usuario", [Validators.required]),
     descripcion: new FormControl("", [Validators.required, Validators.maxLength(150)]),
     repetirPassword:new FormControl("", [Validators.required, 
                                    Validators.minLength(8),

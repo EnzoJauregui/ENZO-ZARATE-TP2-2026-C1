@@ -1,1 +1,76 @@
-<p>card works!</p>
+<div class="publicaion mb-4" >
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-baseline mb-2">
+      <h5 class="card-title fw-bold mb-0">{{ titulo() }}</h5>
+      <small class="text-muted" style="font-size: 0.8rem;">{{ fechaPublicacion() }}</small>
+      </div>
+      <p class="card-text text-muted">
+        {{ contenido() }}
+      </p>
+    </div>
+    @if (imagenUrl()) {
+      <img
+        [src]="imagenUrl()"
+        class="card-img-bottom img-fluid"
+        alt="Imagen de la publicacion"
+      />
+    }
+
+    <div class="card-footer bg-transparent d-flex justify-content-between align-items-center py-2">
+      <button
+        class="btn btn-link text-decoration-none text-reset p-0 d-flex align-items-center"
+        (click)="toggleLike()"
+      >
+        <i
+          class="bi"
+          [class.bi-heart-fill]="hasLike"
+          [class.text-danger]="hasLike"
+          [class.bi-heart]="!hasLike"
+        ></i>
+        <span class="ms-2 fw-semibold" [class.text-danger]="hasLike">
+          {{ hasLike ? 'Te gusta' : 'Me gusta' }}
+        </span>
+        <small class="text-muted ms-1">({{ likes() }})</small>
+      </button>
+
+      <button class="btn btn-outline-dark btn-sm" (click)="toggleComentarios()">
+        {{ mostrarComentarios ? 'Ocultar comentarios' : 'Ver comentarios' }}
+      </button>
+    </div>
+    
+    <div [hidden]="!mostrarComentarios" class="card-footer">
+      <h6 class="fw-bold mb-3 small text-uppercase text-dark">Comentarios</h6>
+      @if(comentarios.length === 0) {
+        <p class="text-muted">Este post aun no tiene comentarios. Se el primero en comentar.</p>
+      } @else {
+        @for (comentario of comentarios; track $index) {
+          <div class=" mb-3 backend-comments">
+            <div class="d-flex mb-2">
+              <div
+                class="card-comentarios flex-grow-1 p-2 rounded shadow-sm"
+              >
+                <div class="d-flex justify-content-between align-items-baseline mb-1">
+                  <span class="fw-bold d-block small">{{ comentario.nombre }}</span>
+                  <small class="text-muted" style="font-size: 0.75rem;">{{ comentario.fecha }}</small>
+                </div>
+                <small class="text-muted">{{ comentario.texto }}</small>
+              </div>
+            </div>
+          </div>
+        }
+      }
+
+      <div class="input-group input-group-sm mt-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Escribe un comentario..."
+          aria-label="Escribe un comentario"
+          [formControl]="mensajeNuevo"
+        />
+        <button class="btn btn-dark" type="button" (click)="enviarComentario()" [disabled]="validar">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+
+
+img{
+    max-height: 400px;
+    max-width: 400px;
+}
+.card{
+    background-color: #8d8f91;
+}
+.card-comentarios, input{
+    background-color: #a5a7a9;
+}

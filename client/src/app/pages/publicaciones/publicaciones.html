@@ -1,1 +1,74 @@
-<p>publicaciones works!</p>
+<div class="container my-4">
+  <form [formGroup]="formulario" (ngSubmit)="publicar()">
+    <div class="card shadow-sm">
+      <div class="card-header border-0 pt-3">
+        <h6 class="fw-bold mb-0 text-dark">
+          <i class="bi bi-pencil-square me-2"></i>Crear nueva publicacion
+        </h6>
+      </div>
+
+      <div class="card-body pt-2">
+        <div class="mb-2">
+          <input
+            type="text"
+            class="form-control form-control-sm fw-bold border-0"
+            placeholder="Titulo de tu publicacion..."
+            formControlName="titulo"
+          />
+        </div>
+
+        <div class="mb-3">
+          <textarea
+            class="form-control border-0"
+            rows="3"
+            placeholder="¿Que estas pensando?"
+            style="resize: none"
+            formControlName="mensaje"
+          ></textarea>
+        </div>
+
+        @if (mostrarInputImagen) {
+          <div class="mb-3 animation-fade-in">
+            <label for="inputImagen" class="btn btn-outline-dark btn-sm">
+              <i class="bi bi-upload me-1"></i> Subi una imagen
+            </label>
+            <input id="inputImagen" type="file" accept="image/*" class="d-none" />
+            <div class="form-text mt-1">Formatos recomendados: JPG.</div>
+          </div>
+        }
+      </div>
+
+      <div
+        class="card-footer bg-transparent d-flex justify-content-between align-items-center py-2"
+      >
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-secondary]="mostrarInputImagen"
+          [class.btn-outline-secondary]="!mostrarInputImagen"
+          (click)="toggleInputImagen()"
+        >
+          <i class="bi bi-image me-1"></i>
+          {{ mostrarInputImagen ? 'Quitar imagen' : 'Agregar imagen' }}
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-dark btn-sm px-4 fw-semibold"
+          [disabled]="!formulario.valid"
+        >
+          Publicar
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="card-publicacion p-1">
+    <app-card></app-card>
+  </div>
+  <div class="card-publicacion p-1">
+    <app-card></app-card>
+  </div>
+  <div class="card-publicacion p-1">
+    <app-card></app-card>
+  </div>
+</div>
