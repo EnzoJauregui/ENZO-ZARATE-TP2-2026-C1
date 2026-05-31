@@ -7,6 +7,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ComentariosController } from './publicaciones/comentarios.controller';
+import { ComentariosController } from './comentarios/comentarios.controller';
 
 @Module({
   imports: [

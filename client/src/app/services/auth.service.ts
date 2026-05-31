@@ -1,29 +1,18 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { AuthLogin } from '../pages/auth/auth-interfaces/authLogin.interface';
 import { AuthRegistro } from '../pages/auth/auth-interfaces/authRegistro.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-   httpClient = inject(HttpClient);
+  httpClient = inject(HttpClient);
+  router = inject(Router);
+  usuario = signal<any>(null);
   
-  async loginS(usuario: AuthLogin){
-    const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
-      usuario, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      peticion.subscribe((respuesta: any) => {
-        console.log(respuesta);
-
-        localStorage.setItem('token', respuesta.token)
-      });
-  }
-
   login(usuario: AuthLogin){
       const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
       usuario, {
@@ -33,7 +22,9 @@ export class AuthService {
         credentials: "include",
       });
       peticion.subscribe((respuesta: any) => {
-        console.log(respuesta);
+        this.usuario.set(respuesta);
+        console.log(this.usuario());
+        this.router.navigateByUrl("/mi-perfil");
       });
   }
 
@@ -46,7 +37,14 @@ export class AuthService {
         credentials: "include",
       });
       peticion.subscribe((respuesta: any) => {
-        console.log(respuesta);
+        this.usuario.set(respuesta);
+        console.log(this.usuario());
+        this.router.navigateByUrl("/mi-perfil");
       });
+  }
+
+  cerrarSesion(){
+    this.usuario.set(null);
+    this.router.navigateByUrl("/auth/login");
   }
 }

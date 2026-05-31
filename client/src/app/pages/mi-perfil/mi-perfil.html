@@ -1,18 +1,27 @@
 <div class="container my-5">
-  
+  @if(perfil() == null){
+    <div class="alert alert-secondary text-center" role="alert">
+      Por favor, inicia sesion.
+    </div>
+  }
+  @else{
   <div class="card shadow-sm border-0 mb-4 overflow-hidden position-relative bg-white">
     <div class="bg-dark bg-gradient" style="height: 140px;"></div>
     
     <div class="card-body pt-0 px-4 pb-4 position-relative">
       <div class="position-absolute start-4" style="top: -60px;">
         <div class="bg-white p-1 rounded-circle shadow-sm">
-          <div class="imagen rounded-circle d-flex" 
-               >
-            <img 
-            [src]="perfil.imagen_perfil" 
-            alt="Foto de perfil" 
-            class="rounded-circle object-fit-cover"
-          />
+          <div class="imagen rounded-circle d-flex">
+            <!-- @if (perfil.imagen_perfil) {
+              <img 
+              [src]="perfil.imagen" 
+              alt="Foto de perfil" 
+              class="rounded-circle object-fit-cover"
+            />
+            } 
+            @else { -->
+              <i class="bi bi-person"></i>
+            <!-- } -->
           </div>
         </div>
       </div>
@@ -21,8 +30,8 @@
 
       <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
         <div>
-          <h3 class="fw-bold mb-0 text-dark">{{ perfil.nombre }} {{ perfil.apellido }}</h3>
-          <p class="text-muted fs-5 mb-0">&#64;{{ perfil.username }}</p>
+          <h3 class="fw-bold mb-0 text-dark">{{ perfil().nombre }} {{ perfil().apellido }}</h3>
+          <p class="text-muted fs-5 mb-0">&#64;{{ perfil().username }}</p>
         </div>
       </div>
     </div>
@@ -37,7 +46,7 @@
             <i class="bi bi-chat-left-quote me-2"></i>Sobre mi
           </h6>
           <p class="text-muted mb-0" style="white-space: pre-line; line-height: 1.5;">
-            {{ perfil.descripcion || 'Este usuario no ha añadido una descripción todavía.' }}
+            {{ perfil().descripcion || 'Este usuario no ha añadido una descripción todavía.' }}
           </p>
         </div>
       </div>
@@ -57,7 +66,7 @@
               </div>
               <div>
                 <small class="text-muted d-block" style="font-size: 0.75rem;">Correo electronico</small>
-                <span class="text-dark fw-medium">{{ perfil.email }}</span>
+                <span class="text-dark fw-medium">{{ perfil().email }}</span>
               </div>
             </div>
 
@@ -67,7 +76,7 @@
               </div>
               <div>
                 <small class="text-muted d-block" style="font-size: 0.75rem;">Fecha de nacimiento</small>
-                <span class="text-dark fw-medium">{{ perfil.fecha_nacimiento }}</span>
+                <span class="text-dark fw-medium">{{ perfil().fecha_nacimiento }}</span>
               </div>
             </div>
           </div>
@@ -91,4 +100,5 @@
       </div>
     </div>
   </div>
+}
 </div>
