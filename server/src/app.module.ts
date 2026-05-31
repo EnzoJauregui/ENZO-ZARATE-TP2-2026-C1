@@ -6,18 +6,18 @@ import { AutenticationModule } from './autentication/autentication.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ComentariosController } from './publicaciones/comentarios.controller';
-import { ComentariosController } from './comentarios/comentarios.controller';
+import { ComentariosModule } from './comentarios/comentarios.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), 
+    ConfigModule.forRoot(),
+    ComentariosModule, 
     PublicacionesModule, 
     AutenticationModule, 
     UsuariosModule,
     MongooseModule.forRoot(process.env.MONGO_URI!)
   ],
-  controllers: [AppController, ComentariosController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

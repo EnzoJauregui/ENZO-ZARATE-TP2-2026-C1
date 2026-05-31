@@ -9,14 +9,15 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrl: './card.css',
 })
 export class Card {
-  imagenUrl: InputSignal<string> = input("../../../assets/sin_perfil.png");
+  imagen_url: InputSignal<string> = input("../../../assets/sin_perfil.png");
   hasLike: boolean = false;
   mensajeNuevo = new FormControl('', [Validators.required])
   mostrarComentarios: boolean = false;
   titulo: InputSignal<string> = input("Titulo de la Publicacion");
   contenido: InputSignal<string> = input("Aca va al contenido");
   likes: InputSignal<number> = input(10);
-  fechaPublicacion: InputSignal<string> = input(new Date().toLocaleDateString('es-AR', {
+  autor: InputSignal<string> = input("UsuarioEjemplo");
+  fecha_publicacion: InputSignal<string> = input(new Date().toLocaleDateString('es-AR', {
     day: '2-digit',
     month: '2-digit',
     year: '2-digit',
@@ -25,9 +26,9 @@ export class Card {
     second: '2-digit'
   }));
   comentarios: IComentario[] = [
-    {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: this.fechaPublicacion()},
-    {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: this.fechaPublicacion()},
-    {nombre: "TercerUsuario", texto: "Un tercer comentario de ejemplo.", fecha: this.fechaPublicacion()}
+    {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: this.fecha_publicacion()},
+    {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: this.fecha_publicacion()},
+    {nombre: "TercerUsuario", texto: "Un tercer comentario de ejemplo.", fecha: this.fecha_publicacion()}
   ];
 
   get validar(): boolean {

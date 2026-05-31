@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePublicacioneDto } from './dto/create-publicacione.dto';
 import { UpdatePublicacioneDto } from './dto/update-publicacione.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Publicaciones } from './entities/publicacione.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class PublicacionesService {
-  create(createPublicacioneDto: CreatePublicacioneDto) {
-    return 'This action adds a new publicacione';
+  constructor(@InjectModel("Publicaciones") private readonly PublicacionesModel: Model<Publicaciones>) {}
+
+  async create(createPublicacioneDto: CreatePublicacioneDto) {
+    const nuevaPublicacion = await this.PublicacionesModel.create(createPublicacioneDto);
+    return nuevaPublicacion;
   }
 
-  findAll() {
-    return `This action returns all publicaciones`;
+  async findAll() {
+    return await this.PublicacionesModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} publicacione`;
+  async findOne(id: string) {
+    return await this.PublicacionesModel.findById(id);
   }
 
-  update(id: number, updatePublicacioneDto: UpdatePublicacioneDto) {
-    return `This action updates a #${id} publicacione`;
+  async update(id: string, updatePublicacioneDto: UpdatePublicacioneDto) {
+    return await this.PublicacionesModel.findByIdAndUpdate(id, updatePublicacioneDto, { new: true });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} publicacione`;
+  async remove(id: string) {
+    return await this.PublicacionesModel.findByIdAndDelete(id);
   }
 }

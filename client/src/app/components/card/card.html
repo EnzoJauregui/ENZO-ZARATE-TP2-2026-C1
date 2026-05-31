@@ -1,17 +1,22 @@
 <div class="publicaion mb-4" >
   <div class="card shadow-sm">
     <div class="card-body">
+      <div class="d-flex align-items-center mb-2 text-dark">
+        <div>
+          <span class="fw-bold d-block small">{{ autor() }}</span>
+        </div>
+      </div>
       <div class="d-flex justify-content-between align-items-baseline mb-2">
       <h5 class="card-title fw-bold mb-0">{{ titulo() }}</h5>
-      <small class="text-muted" style="font-size: 0.8rem;">{{ fechaPublicacion() }}</small>
+      <small class="text-muted" style="font-size: 0.8rem;">{{ fecha_publicacion() }}</small>
       </div>
       <p class="card-text text-muted">
         {{ contenido() }}
       </p>
     </div>
-    @if (imagenUrl()) {
+    @if (imagen_url()) {
       <img
-        [src]="imagenUrl()"
+        [src]="imagen_url()"
         class="card-img-bottom img-fluid"
         alt="Imagen de la publicacion"
       />

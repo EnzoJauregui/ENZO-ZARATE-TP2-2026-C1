@@ -34,7 +34,7 @@ export class AutenticationService {
     return this.crearToken(usuario);
   }
 
-  crearToken(usuario) {
+  crearToken(usuario: any) {
     const payload = {
       _id: usuario._id,
       email: usuario.email,

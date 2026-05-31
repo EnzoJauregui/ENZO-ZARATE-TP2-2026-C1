@@ -19,16 +19,16 @@ export class PublicacionesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.publicacionesService.findOne(+id);
+    return this.publicacionesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePublicacioneDto: UpdatePublicacioneDto) {
-    return this.publicacionesService.update(+id, updatePublicacioneDto);
+    return this.publicacionesService.update(id, updatePublicacioneDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.publicacionesService.remove(+id);
+    return this.publicacionesService.remove(id);
   }
 }
