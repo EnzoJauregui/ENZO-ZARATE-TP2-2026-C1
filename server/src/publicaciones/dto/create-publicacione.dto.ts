@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsOptional, IsDateString } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 
 export class CreatePublicacioneDto {
     @IsString()
@@ -11,9 +11,9 @@ export class CreatePublicacioneDto {
 
     @IsString()
     @IsNotEmpty()
-    id_autor: string;
+    email_autor: string;
 
-    @IsDateString()
+    @IsString()
     @IsNotEmpty()
     fecha_publicacion: string;
 
@@ -22,9 +22,9 @@ export class CreatePublicacioneDto {
     likes: number;
 
     @IsOptional()
-    imagen_Url: string;
+    imagen_url: string;
 
     @IsOptional()
-    @IsDateString()
+    @IsString()
     fecha_baja: string;
 }

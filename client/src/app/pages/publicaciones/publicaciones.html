@@ -62,13 +62,34 @@
       </div>
     </div>
   </form>
-  <div class="card-publicacion p-1">
-    <app-card></app-card>
-  </div>
-  <div class="card-publicacion p-1">
-    <app-card></app-card>
-  </div>
-  <div class="card-publicacion p-1">
-    <app-card></app-card>
-  </div>
+  @if(publicaciones().length === 0) {
+    <div class="text-center text-muted mt-4">
+      <i class="bi bi-journal-x fs-1"></i>
+      <p class="mt-2">
+        No hay publicaciones para mostrar. Se el primero en publicar!!!
+      </p>
+    </div>
+  } @else {
+    <div class="card-publicacion p-1">
+      @for (publicacion of publicaciones(); track $index) {
+        <div class="col p-1">
+          <app-card 
+            [titulo]="publicacion.titulo"
+            [contenido]="publicacion.contenido"
+            [fecha_publicacion]="publicacion.fecha_publicacion"
+            [likes]="publicacion.likes"
+            [autor]="publicacion.email_autor"
+          ></app-card>
+        </div>
+      }
+    </div>
+  }
 </div>
+
+<app-modal
+  tituloModal="Error"
+  [textoModal]="mensajeModal()" 
+  [flagAbrir]="mostrarModal()"
+  [flagModalBoton]="false"
+  (cerrarModal)="mostrarModal.set(false)"
+></app-modal>
