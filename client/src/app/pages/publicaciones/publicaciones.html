@@ -74,11 +74,13 @@
       @for (publicacion of publicaciones(); track $index) {
         <div class="col p-1">
           <app-card 
+            [_id]="publicacion._id"
             [titulo]="publicacion.titulo"
             [contenido]="publicacion.contenido"
             [fecha_publicacion]="publicacion.fecha_publicacion"
             [likes]="publicacion.likes"
             [autor]="publicacion.email_autor"
+            (likeActualizado)="manejarLike($event.id, $event.nuevoValor)"
           ></app-card>
         </div>
       }

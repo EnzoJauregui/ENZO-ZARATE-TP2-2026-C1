@@ -1,6 +1,10 @@
-import { IsString, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, IsOptional, IsArray } from "class-validator";
 
 export class CreatePublicacioneDto {
+    @IsOptional()
+    @IsString()
+    _id: string;
+    
     @IsString()
     @IsNotEmpty()
     titulo: string;
@@ -20,6 +24,10 @@ export class CreatePublicacioneDto {
     @IsNumber()
     @IsNotEmpty()
     likes: number;
+
+    @IsArray()
+    @IsString({ each: true })
+    likes_usuarios: string[];
 
     @IsOptional()
     imagen_url: string;

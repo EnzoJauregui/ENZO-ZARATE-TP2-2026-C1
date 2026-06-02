@@ -1,8 +1,5 @@
-export interface IPublicacion {
-  titulo: string;
-  contenido: string;
-  likes: number;
-  imagen_url?: string;
-  email_autor: string;
-  fecha_publicacion: string;
+import { IPost } from "./post.interface";
+
+export interface IPublicacion extends IPost {
+  _id: string;
 }

@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Card } from '../../components/card/card';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PublicacionService } from '../../services/publicacion.service';
-import { IPublicacion } from './publicacion.interface';
+import { IPost } from './post.interface';
 import { AuthService } from '../../services/auth.service';
 import { Modal } from '../../components/modal/modal';
 
@@ -27,7 +27,7 @@ export class Publicaciones {
   });
   publicaciones = this.publicacionService.publicaciones;
   //publicaciones = signal<IPublicacion[]>([]);
-
+  
   ngOnInit() {
     this.publicacionService.traerPublicaciones()
   }
@@ -38,19 +38,14 @@ export class Publicaciones {
 
   publicar() {
     if (this.formulario.invalid) return;
-    const nuevaPublicacion: IPublicacion = {
+    const nuevaPublicacion: IPost = {
       titulo: this.formulario.value.titulo ?? "",
       contenido: this.formulario.value.mensaje ?? "",
       imagen_url: this.nuevaImagenUrl ? this.nuevaImagenUrl : undefined,
       likes: 0,
+      likes_usuarios: [],
       email_autor: this.usuario()?.email ?? "",
-      fecha_publicacion: new Date().toLocaleDateString('es-AR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      }) 
+      fecha_publicacion: new Date().toISOString(),
     };
     if(this.usuario() == null){
       this.mensajeModal.set("Debes iniciar sesion para publicar.");
@@ -59,9 +54,13 @@ export class Publicaciones {
       this.publicacionService.crearPublicacion(nuevaPublicacion);
       console.log('Publicacion creada :', nuevaPublicacion);
     }
-    
     this.formulario.reset();
     this.nuevaImagenUrl = '';
     this.mostrarInputImagen = false;
+  }
+
+  manejarLike(id: string, nuevoValor: number){
+
+    this.publicacionService.cambiarLikes(id, nuevoValor);
   }
 }

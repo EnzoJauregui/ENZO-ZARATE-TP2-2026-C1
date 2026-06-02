@@ -23,7 +23,7 @@ export class PublicacionesService {
   }
 
   async update(id: string, updatePublicacioneDto: UpdatePublicacioneDto) {
-    return await this.PublicacionesModel.findByIdAndUpdate(id, updatePublicacioneDto, { new: true });
+    return await this.PublicacionesModel.findByIdAndUpdate(id, updatePublicacioneDto, { returnDocument: 'after' });
   }
 
   async remove(id: string) {

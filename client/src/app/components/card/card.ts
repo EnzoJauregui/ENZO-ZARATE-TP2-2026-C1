@@ -1,30 +1,26 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, output, signal } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { IComentario } from './comentarios.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-card',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, DatePipe],
   templateUrl: './card.html',
   styleUrl: './card.css',
 })
 export class Card {
   imagen_url: InputSignal<string> = input("../../../assets/sin_perfil.png");
-  hasLike: boolean = false;
+  hasLike= signal<boolean> (false);
   mensajeNuevo = new FormControl('', [Validators.required])
   mostrarComentarios: boolean = false;
   titulo: InputSignal<string> = input("Titulo de la Publicacion");
+  _id = input<string>("id-ejemplo");
   contenido: InputSignal<string> = input("Aca va al contenido");
-  likes: InputSignal<number> = input(10);
+  likes: InputSignal<number> = input(0);
+  likeActualizado = output<{id: string, nuevoValor: number}>();
   autor: InputSignal<string> = input("UsuarioEjemplo");
-  fecha_publicacion: InputSignal<string> = input(new Date().toLocaleDateString('es-AR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  }));
+  fecha_publicacion: InputSignal<string> = input(new Date().toISOString());
   comentarios: IComentario[] = [
     {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: this.fecha_publicacion()},
     {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: this.fecha_publicacion()},
@@ -40,11 +36,14 @@ export class Card {
     console.log('Comentario enviado:', this.mensajeNuevo.value);
     this.mensajeNuevo.reset();
   }
-    
 
   toggleLike() {
-    this.hasLike = !this.hasLike;
+    this.hasLike.update( valor => !valor);
+    const nuevoValor = this.hasLike() ? this.likes() + 1 : this.likes() - 1;
+    this.likeActualizado.emit({id: this._id(), nuevoValor: nuevoValor});
   }
+
+
 
   toggleComentarios() {
     this.mostrarComentarios = !this.mostrarComentarios;
