@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsOptional, IsArray } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, IsOptional, IsArray, IsBoolean } from "class-validator";
 
 export class CreatePublicacioneDto {
     @IsOptional()
@@ -26,13 +26,12 @@ export class CreatePublicacioneDto {
     likes: number;
 
     @IsArray()
-    @IsString({ each: true })
     likes_usuarios: string[];
 
     @IsOptional()
     imagen_url: string;
 
     @IsOptional()
-    @IsString()
-    fecha_baja: string;
+    @IsBoolean()
+    fecha_baja: boolean;
 }

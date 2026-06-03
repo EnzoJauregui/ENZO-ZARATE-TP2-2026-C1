@@ -17,11 +17,14 @@ export class Publicaciones {
     @Prop({ required: true })
     fecha_publicacion: string;
 
+    @Prop({ type: [String], default: [] })
+    likes_usuarios: string[];
+
     @Prop()
     imagen_url?: string;
 
     @Prop()
-    fecha_baja?: string;
+    fecha_baja?: boolean;
 }
 
 export const PublicacionesSchema = SchemaFactory.createForClass(Publicaciones);

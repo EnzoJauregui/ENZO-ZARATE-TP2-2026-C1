@@ -1,22 +1,31 @@
 <div class="publicaion mb-4" >
   <div class="card shadow-sm">
     <div class="card-body">
-      <div class="d-flex align-items-center mb-2 text-dark">
+      <div class="d-flex justify-content-between align-items-center mb-2 text-dark">
         <div>
-          <span class="fw-bold d-block small">{{ autor() }}</span>
+          <span class="fw-bold d-block small">{{ publicacion().email_autor }}</span>
         </div>
+        <button 
+          class="btn btn-outline-dark p-1 border-0" 
+          title="Eliminar publicación"
+          (click)="eliminarPublicacion()"
+        >
+          <i class="bi bi-trash3"></i>
+        </button>
       </div>
       <div class="d-flex justify-content-between align-items-baseline mb-2">
-      <h5 class="card-title fw-bold mb-0">{{ titulo() }}</h5>
-      <small class="text-muted" style="font-size: 0.8rem;">{{ fecha_publicacion() | date:'dd/MM/yy HH:mm' }}</small>
+      <h5 class="card-title fw-bold mb-0">{{ publicacion().titulo }}</h5>
+      <small class="text-muted" style="font-size: 0.8rem;">
+        {{ publicacion().fecha_publicacion | date:'dd/MM/yy HH:mm' }}
+      </small>
       </div>
       <p class="card-text text-muted">
-        {{ contenido() }}
+        {{ publicacion().contenido }}
       </p>
     </div>
-    @if (imagen_url()) {
+    @if (publicacion().imagen_url) {
       <img
-        [src]="imagen_url()"
+        [src]="publicacion().imagen_url"
         class="card-img-bottom img-fluid"
         alt="Imagen de la publicacion"
       />
@@ -49,7 +58,8 @@
       @if(comentarios.length === 0) {
         <p class="text-muted">Este post aun no tiene comentarios. Se el primero en comentar.</p>
       } @else {
-        @for (comentario of comentarios; track $index) {
+        @for (comentario of comentarios; track $index) { 
+          // recordatorio de cambiar el %index en caso de ser necvesario
           <div class=" mb-3 backend-comments">
             <div class="d-flex mb-2">
               <div
@@ -74,7 +84,9 @@
           aria-label="Escribe un comentario"
           [formControl]="mensajeNuevo"
         />
-        <button class="btn btn-dark" type="button" (click)="enviarComentario()" [disabled]="validar">Enviar</button>
+        <button class="btn btn-dark" type="button" (click)="enviarComentario()" [disabled]="validar">
+          Enviar
+        </button>
       </div>
     </div>
   </div>

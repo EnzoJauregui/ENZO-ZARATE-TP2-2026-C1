@@ -71,16 +71,11 @@
     </div>
   } @else {
     <div class="card-publicacion p-1">
-      @for (publicacion of publicaciones(); track $index) {
+      @for (publicacion of publicaciones(); track publicacion._id) {
         <div class="col p-1">
           <app-card 
-            [_id]="publicacion._id"
-            [titulo]="publicacion.titulo"
-            [contenido]="publicacion.contenido"
-            [fecha_publicacion]="publicacion.fecha_publicacion"
-            [likes]="publicacion.likes"
-            [autor]="publicacion.email_autor"
-            (likeActualizado)="manejarLike($event.id, $event.nuevoValor)"
+            [publicacion]="publicacion"
+            [id_usuario_like]="usuario()?._id"
           ></app-card>
         </div>
       }

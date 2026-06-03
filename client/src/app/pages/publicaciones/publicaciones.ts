@@ -13,6 +13,7 @@ import { Modal } from '../../components/modal/modal';
   templateUrl: './publicaciones.html',
   styleUrl: './publicaciones.css',
 })
+
 export class Publicaciones {
   publicacionService = inject(PublicacionService);
   authService = inject(AuthService);
@@ -27,9 +28,9 @@ export class Publicaciones {
   });
   publicaciones = this.publicacionService.publicaciones;
   //publicaciones = signal<IPublicacion[]>([]);
-  
+
   ngOnInit() {
-    this.publicacionService.traerPublicaciones()
+    this.publicacionService.traerPublicaciones();
   }
 
   toggleInputImagen() {
@@ -47,6 +48,13 @@ export class Publicaciones {
       email_autor: this.usuario()?.email ?? "",
       fecha_publicacion: new Date().toISOString(),
     };
+    this.crearPublicacion(nuevaPublicacion);
+    this.formulario.reset();
+    this.nuevaImagenUrl = '';
+    this.mostrarInputImagen = false;
+  }
+
+  crearPublicacion(nuevaPublicacion: IPost) {
     if(this.usuario() == null){
       this.mensajeModal.set("Debes iniciar sesion para publicar.");
       this.mostrarModal.set(true);
@@ -54,13 +62,5 @@ export class Publicaciones {
       this.publicacionService.crearPublicacion(nuevaPublicacion);
       console.log('Publicacion creada :', nuevaPublicacion);
     }
-    this.formulario.reset();
-    this.nuevaImagenUrl = '';
-    this.mostrarInputImagen = false;
-  }
-
-  manejarLike(id: string, nuevoValor: number){
-
-    this.publicacionService.cambiarLikes(id, nuevoValor);
   }
 }

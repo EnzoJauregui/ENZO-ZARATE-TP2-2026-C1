@@ -1,7 +1,9 @@
-import { Component, input, InputSignal, output, signal } from '@angular/core';
+import { Component, input, InputSignal, signal, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { IComentario } from './comentarios.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PublicacionService } from '../../services/publicacion.service';
+import { IPublicacion } from '../../pages/publicaciones/publicacion.interface';
 
 @Component({
   selector: 'app-card',
@@ -10,22 +12,35 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrl: './card.css',
 })
 export class Card {
-  imagen_url: InputSignal<string> = input("../../../assets/sin_perfil.png");
+  pubService = inject(PublicacionService);
+
+  publicacion: InputSignal<IPublicacion> = input({} as IPublicacion);
   hasLike= signal<boolean> (false);
   mensajeNuevo = new FormControl('', [Validators.required])
   mostrarComentarios: boolean = false;
-  titulo: InputSignal<string> = input("Titulo de la Publicacion");
-  _id = input<string>("id-ejemplo");
-  contenido: InputSignal<string> = input("Aca va al contenido");
-  likes: InputSignal<number> = input(0);
-  likeActualizado = output<{id: string, nuevoValor: number}>();
-  autor: InputSignal<string> = input("UsuarioEjemplo");
-  fecha_publicacion: InputSignal<string> = input(new Date().toISOString());
+  id_usuario_like = input<string>("");
+  likes_usuarios= signal<string[]>([]);
+  hayUsuario = signal<boolean>(false);
+  likes = signal<number>(0);
   comentarios: IComentario[] = [
-    {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: this.fecha_publicacion()},
-    {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: this.fecha_publicacion()},
-    {nombre: "TercerUsuario", texto: "Un tercer comentario de ejemplo.", fecha: this.fecha_publicacion()}
+    {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: new Date().toISOString()},
+    {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: new Date().toISOString()},
+    {nombre: "TercerUsuario", texto: "Un tercer comentario de ejemplo.", fecha: new Date().toISOString()}
   ];
+
+  ngOnInit() {
+    this.likes.set(this.publicacion().likes || 0);
+    
+    const likesActuales = this.publicacion().likes_usuarios || [];
+    this.likes_usuarios.set(likesActuales);
+
+    if (this.id_usuario_like() && this.id_usuario_like() !== "") {
+      this.hayUsuario.set(true);
+      this.hasLike.set(likesActuales.includes(this.id_usuario_like()));
+    } else {
+      this.hasLike.set(false);
+    }
+  }
 
   get validar(): boolean {
     const mensajeLimpio = this.mensajeNuevo.value?.trim();
@@ -38,14 +53,36 @@ export class Card {
   }
 
   toggleLike() {
-    this.hasLike.update( valor => !valor);
-    const nuevoValor = this.hasLike() ? this.likes() + 1 : this.likes() - 1;
-    this.likeActualizado.emit({id: this._id(), nuevoValor: nuevoValor});
+    if (!this.id_usuario_like() || this.id_usuario_like() === "") {
+      console.warn("Debes iniciar sesión para dar like");
+      return; 
+    }
+    
+    const tieneLike: boolean = this.likes_usuarios().includes(this.id_usuario_like());
+    if(tieneLike){
+      this.likes_usuarios.update(
+        likes => likes.filter(id => id !==this.id_usuario_like())
+      );
+      this.hasLike.set(false);
+      this.likes.update(likes => likes - 1);
+    } else {
+      this.likes_usuarios.update(
+        likes => [ ...likes, this.id_usuario_like() ]
+      );
+      this.hasLike.set(true);
+      this.likes.update(likes => likes + 1);
+    }
+    this.pubService.cambiarLikes(this.publicacion()._id, this.likes_usuarios().length, this.likes_usuarios());
   }
+  
+  eliminarPublicacion(){
+    if(this.publicacion().email_autor){
 
-
+    }
+  }
 
   toggleComentarios() {
     this.mostrarComentarios = !this.mostrarComentarios;
   }
+
 }
