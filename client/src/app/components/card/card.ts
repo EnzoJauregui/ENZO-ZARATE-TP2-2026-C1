@@ -66,11 +66,8 @@ export class Card {
   }
 
   toggleLike() {
-    if (!this.id_usuario_like() || this.id_usuario_like() === "") {
-      console.warn("Debes iniciar sesión para dar like");
-      return; 
-    }
-    
+    if (!this.id_usuario_like() || this.id_usuario_like() === "") return; 
+  
     const tieneLike: boolean = this.likes_usuarios().includes(this.id_usuario_like());
     if(tieneLike){
       this.likes_usuarios.update(
@@ -105,5 +102,4 @@ export class Card {
   toggleComentarios() {
     this.mostrarComentarios = !this.mostrarComentarios;
   }
-
 }

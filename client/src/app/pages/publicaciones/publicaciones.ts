@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Card } from '../../components/card/card';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PublicacionService } from '../../services/publicacion.service';
@@ -22,15 +22,27 @@ export class Publicaciones {
   mostrarInputImagen: boolean = false;
   mostrarModal = signal<boolean>(false);
   mensajeModal= signal<string>('');
+  paginaActual = signal<number>(1);
   formulario = new FormGroup({
     titulo: new FormControl('', [Validators.required]),
     mensaje: new FormControl('', [Validators.required]),
   });
+  limitePorPagina: number = 3;
   publicaciones = this.publicacionService.publicaciones;
+  totalPaginas = computed(() => {
+    return Math.ceil(this.publicaciones().length / this.limitePorPagina) || 1;
+  });
+  publicacionesPorPagina = computed(() => {
+    let lista = this.publicaciones();
+    const inicio = (this.paginaActual() - 1) * this.limitePorPagina;
+    const fin = inicio + this.limitePorPagina;
+    return lista.slice(inicio, fin);
+  })
   //publicaciones = signal<IPublicacion[]>([]);
 
   ngOnInit() {
     this.publicacionService.traerPublicaciones();
+    
   }
 
   toggleInputImagen() {

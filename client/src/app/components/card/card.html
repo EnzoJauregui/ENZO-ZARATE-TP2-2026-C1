@@ -35,6 +35,7 @@
     <div class="card-footer bg-transparent d-flex justify-content-between align-items-center py-2">
       <button
         class="btn btn-link text-decoration-none text-reset p-0 d-flex align-items-center"
+        [disabled]="!hayUsuario()"
         (click)="toggleLike()"
       >
         <i
@@ -60,7 +61,6 @@
         <p class="text-muted">Este post aun no tiene comentarios. Se el primero en comentar.</p>
       } @else {
         @for (comentario of comentarios; track $index) { 
-          // recordatorio de cambiar el %index en caso de ser necvesario
           <div class=" mb-3 backend-comments">
             <div class="d-flex mb-2">
               <div
@@ -68,7 +68,9 @@
               >
                 <div class="d-flex justify-content-between align-items-baseline mb-1">
                   <span class="fw-bold d-block small">{{ comentario.nombre }}</span>
-                  <small class="text-muted" style="font-size: 0.75rem;">{{ comentario.fecha }}</small>
+                  <small class="text-muted" style="font-size: 0.75rem;">
+                    {{ comentario.fecha }}
+                  </small>
                 </div>
                 <small class="text-muted">{{ comentario.texto }}</small>
               </div>

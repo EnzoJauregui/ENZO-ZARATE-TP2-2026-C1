@@ -62,7 +62,23 @@
       </div>
     </div>
   </form>
-  @if(publicaciones().length === 0) {
+  @if (publicaciones().length > 0) {
+    <div class="selector d-flex justify-content-end align-items-center my-3 p-2 rounded shadow-sm">
+      <div class="selector d-flex align-items-center">
+        <label for="ordenarSelect" class="me-2 mb-0 text-muted small fw-bold">
+          <i class="bi bi-sort-down me-1"></i>Ordenar por:
+        </label>
+        <select 
+          id="ordenarSelect" 
+          class="form-select form-select-sm border-0 shadow-none fw-semibold" 
+        >
+          <option value="fecha">Mas recientes</option>
+          <option value="likes">Mas populares (Me gusta)</option>
+        </select>
+      </div>
+    </div>
+  }
+  @if(publicacionesPorPagina().length === 0) {
     <div class="text-center text-muted mt-4">
       <i class="bi bi-journal-x fs-1"></i>
       <p class="mt-2">
@@ -71,7 +87,7 @@
     </div>
   } @else {
     <div class="card-publicacion p-1">
-      @for (publicacion of publicaciones(); track publicacion._id) {
+      @for (publicacion of publicacionesPorPagina(); track publicacion._id) {
         <div class="col p-1">
           <app-card 
             [publicacion]="publicacion"
@@ -82,9 +98,41 @@
         </div>
       }
     </div>
+    @if (totalPaginas() > 1) {
+      <nav class="d-flex justify-content-center mt-4">
+        <ul class="pagination pagination-sm shadow-sm">
+          
+          <li class="page-item" [class.disabled]="paginaActual() === 1">
+            <button class="page-link text-dark" (click)="paginaActual.set(paginaActual() - 1)">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+          </li>
+
+          @for (item of [].constructor(this.totalPaginas()); track $index) {
+            <li class="page-item" [class.active]="paginaActual() === ($index + 1)">
+              <button 
+                class="page-link" 
+                [class.bg-dark]="paginaActual() === ($index + 1)"
+                [class.border-dark]="paginaActual() === ($index + 1)"
+                [class.text-white]="paginaActual() === ($index + 1)"
+                [class.text-dark]="paginaActual() !== ($index + 1)"
+                (click)="paginaActual.set($index + 1)"
+              >
+                {{ $index + 1 }}
+              </button>
+            </li>
+          }
+          <li class="page-item" [class.disabled]="paginaActual() === totalPaginas()">
+            <button class="page-link text-dark" (click)="paginaActual.set(paginaActual() + 1)">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </li>
+
+        </ul>
+      </nav>
+    }
   }
 </div>
-
 <app-modal
   tituloModal="Error"
   [textoModal]="mensajeModal()" 
