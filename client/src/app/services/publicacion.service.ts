@@ -16,7 +16,7 @@ export class PublicacionService {
     peticion.subscribe((respuesta: any) => {
       const lista_ordenada = respuesta as IPublicacion[];
       lista_ordenada.sort((a, b) => b.fecha_publicacion.localeCompare(a.fecha_publicacion));
-      this.publicaciones.set(lista_ordenada);
+      this.publicaciones.set(lista_ordenada.filter(publicacion => !publicacion.fecha_baja));
     });
   }
 
@@ -30,6 +30,15 @@ export class PublicacionService {
 
   cambiarLikes(id: string, nuevoValor: number, likes_usuarios: string[]){
     const payload_update = { likes: nuevoValor, likes_usuarios: likes_usuarios };
+    const peticion = this.http.patch(environment.apiUrl + 'publicaciones/'+id, payload_update);
+    peticion.subscribe( (respuesta: any) => {
+      console.log('Publicacion actualizada :', respuesta);
+      this.traerPublicaciones();
+    })
+  }
+
+  eliminarPublicacion(id: string, fecha_baja: boolean){
+    const payload_update = { fecha_baja: fecha_baja };
     const peticion = this.http.patch(environment.apiUrl + 'publicaciones/'+id, payload_update);
     peticion.subscribe( (respuesta: any) => {
       console.log('Publicacion actualizada :', respuesta);

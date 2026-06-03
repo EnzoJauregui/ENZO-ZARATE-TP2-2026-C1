@@ -6,4 +6,5 @@ export interface IPost {
   imagen_url?: string;
   email_autor: string;
   fecha_publicacion: string;
+  fecha_baja: boolean;
 }

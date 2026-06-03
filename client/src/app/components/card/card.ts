@@ -4,10 +4,11 @@ import { IComentario } from './comentarios.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PublicacionService } from '../../services/publicacion.service';
 import { IPublicacion } from '../../pages/publicaciones/publicacion.interface';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-card',
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, DatePipe, Modal],
   templateUrl: './card.html',
   styleUrl: './card.css',
 })
@@ -18,10 +19,17 @@ export class Card {
   hasLike= signal<boolean> (false);
   mensajeNuevo = new FormControl('', [Validators.required])
   mostrarComentarios: boolean = false;
+  usuario_perfil: InputSignal<string> = input("usuario");
+  usuario_email: InputSignal<string> = input("email");
   id_usuario_like = input<string>("");
   likes_usuarios= signal<string[]>([]);
   hayUsuario = signal<boolean>(false);
   likes = signal<number>(0);
+  mostrarModal = signal<boolean>(false);
+  tituloModal = signal<string>('');
+  textoModal = signal<string>('');
+  flagModalBoton = signal<boolean>(false);
+  puedeEliminar = signal<boolean>(false);
   comentarios: IComentario[] = [
     {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: new Date().toISOString()},
     {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: new Date().toISOString()},
@@ -33,7 +41,7 @@ export class Card {
     
     const likesActuales = this.publicacion().likes_usuarios || [];
     this.likes_usuarios.set(likesActuales);
-
+    this.puedeEliminar.set(this.verificarPuedeEliminar());
     if (this.id_usuario_like() && this.id_usuario_like() !== "") {
       this.hayUsuario.set(true);
       this.hasLike.set(likesActuales.includes(this.id_usuario_like()));
@@ -45,6 +53,11 @@ export class Card {
   get validar(): boolean {
     const mensajeLimpio = this.mensajeNuevo.value?.trim();
     return this.mensajeNuevo.invalid || !mensajeLimpio;
+  }
+
+  verificarPuedeEliminar() {
+    return this.publicacion().email_autor == this.usuario_email()  
+            || this.usuario_perfil() === "administrador";
   }
 
   enviarComentario() {
@@ -76,9 +89,17 @@ export class Card {
   }
   
   eliminarPublicacion(){
-    if(this.publicacion().email_autor){
-
+    this.mostrarModal.set(false);
+    if(this.hayUsuario() && this.puedeEliminar()){
+      this.pubService.eliminarPublicacion(this.publicacion()._id, true);
     }
+  }
+
+  confirmarModal(){
+    this.mostrarModal.set(true);
+    this.tituloModal.set("Confirmar eliminacion");
+    this.textoModal.set("¿Estas seguro de que quieres eliminar esta publicacion?");
+    this.flagModalBoton.set(true);
   }
 
   toggleComentarios() {

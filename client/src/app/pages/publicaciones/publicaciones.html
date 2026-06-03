@@ -76,6 +76,8 @@
           <app-card 
             [publicacion]="publicacion"
             [id_usuario_like]="usuario()?._id"
+            [usuario_email]="usuario()?.email"
+            [usuario_perfil]="usuario()?.perfil"
           ></app-card>
         </div>
       }

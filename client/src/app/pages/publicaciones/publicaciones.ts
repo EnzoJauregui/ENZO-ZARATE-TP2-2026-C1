@@ -47,6 +47,7 @@ export class Publicaciones {
       likes_usuarios: [],
       email_autor: this.usuario()?.email ?? "",
       fecha_publicacion: new Date().toISOString(),
+      fecha_baja: false,
     };
     this.crearPublicacion(nuevaPublicacion);
     this.formulario.reset();
