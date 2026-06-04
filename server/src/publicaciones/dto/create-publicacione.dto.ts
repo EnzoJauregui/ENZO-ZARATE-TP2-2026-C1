@@ -19,6 +19,10 @@ export class CreatePublicacioneDto {
 
     @IsString()
     @IsNotEmpty()
+    id_autor: string;
+
+    @IsString()
+    @IsNotEmpty()
     fecha_publicacion: string;
 
     @IsNumber()

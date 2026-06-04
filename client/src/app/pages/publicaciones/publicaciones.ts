@@ -24,7 +24,7 @@ export class Publicaciones {
   mostrarModal = signal<boolean>(false);
   mensajeModal= signal<string>('');
 
-  limitePorPagina: number = 3;
+  limitePorPagina: number = 4;
   paginaActual = signal<number>(1);
   usuarioFiltradoId = signal<string | undefined>(undefined);
   criterioOrden = signal<string>("fecha");

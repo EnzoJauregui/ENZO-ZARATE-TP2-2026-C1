@@ -14,6 +14,9 @@ export class Publicaciones {
     @Prop({ required: true })
     likes: number;
 
+    @Prop({ required:true })
+    id_autor: string;
+
     @Prop({ required: true })
     fecha_publicacion: string;
 

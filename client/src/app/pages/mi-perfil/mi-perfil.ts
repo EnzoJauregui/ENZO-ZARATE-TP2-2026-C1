@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { Card } from "../../components/card/card";
 import { AuthService } from '../../services/auth.service';
+import { PublicacionService } from '../../services/publicacion.service';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -10,14 +11,18 @@ import { AuthService } from '../../services/auth.service';
 })
 export class MiPerfil {
   authService = inject(AuthService);
+  publicacionService = inject(PublicacionService)
+
   perfil = this.authService.usuario;
-  // perfil = {
-  //   email: 'enzo@mail.com',
-  //   nombre: 'Enzo',
-  //   imagen_perfil: "./assets/sin_perfil.png",
-  //   apellido: 'Zarate',
-  //   username: 'enzo_zarate',
-  //   fecha_nacimiento: '25/05/2001',
-  //   descripcion: 'Esta es una descripcion cualquiera: ajsdnuasshuhasbdchbasihdbcuahbdcihabhbdh'
-  // };
+  publicaciones = this.publicacionService.publicaciones;
+
+  constructor() { effect( () => { this.cargarDatos(); })}
+
+  cargarDatos(){
+    const usuarioActual = this.perfil();
+    if (usuarioActual && usuarioActual._id) {
+      console.log(usuarioActual)
+      this.publicacionService.traerPublicaciones(3, 0, usuarioActual._id, 'fecha');
+    }
+  }
 }

@@ -14,6 +14,7 @@ export class PublicacionService {
   
   traerPublicaciones(limit: number, offset: number, usuario_id?: string, criterioOrden: string = 'fecha') {
     let url = `${environment.apiUrl}publicaciones?orden=${criterioOrden}&limit=${limit}&offset=${offset}`;
+    console.log(usuario_id);
     if(usuario_id){
       url += `&id_autor=${usuario_id}`
     }
@@ -21,12 +22,19 @@ export class PublicacionService {
     peticion.subscribe((respuesta: any) => {
       const lista = respuesta as IPublicacion[];
       this.publicaciones.set(lista);
-      if (lista.length < limit && offset === 0) {
-        this.totalPublicaciones.set(lista.length);
-      } else if (lista.length === limit) {
-        this.totalPublicaciones.set(offset + limit + 1);
+      
+      if(offset === 0){
+        if (lista.length < limit) {
+          this.totalPublicaciones.set(lista.length);
+        } else {
+          this.totalPublicaciones.set(limit + 1);
+        }
       } else {
-        this.totalPublicaciones.set(offset + lista.length);
+        if(lista.length < limit) {
+          this.totalPublicaciones.set(offset + lista.length);
+        } else {
+          this.totalPublicaciones.set(offset + limit + 1);
+        }
       }
     });
   }

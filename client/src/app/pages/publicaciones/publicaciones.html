@@ -110,21 +110,6 @@
               <i class="bi bi-chevron-left"></i>
             </button>
           </li>
-
-          @for (item of [].constructor(this.totalPaginas()); track $index) {
-            <li class="page-item" [class.active]="paginaActual() === ($index + 1)">
-              <button 
-                class="page-link" 
-                [class.bg-dark]="paginaActual() === ($index + 1)"
-                [class.border-dark]="paginaActual() === ($index + 1)"
-                [class.text-white]="paginaActual() === ($index + 1)"
-                [class.text-dark]="paginaActual() !== ($index + 1)"
-                (click)="paginaActual.set($index + 1)"
-              >
-                {{ $index + 1 }}
-              </button>
-            </li>
-          }
           <li class="page-item" [class.disabled]="paginaActual() === totalPaginas()">
             <button class="page-link text-dark" (click)="paginaActual.set(paginaActual() + 1)">
               <i class="bi bi-chevron-right"></i>
