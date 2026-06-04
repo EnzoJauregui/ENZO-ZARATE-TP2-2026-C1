@@ -10,39 +10,50 @@ import { IPost } from '../pages/publicaciones/post.interface';
 export class PublicacionService {
   http = inject(HttpClient);
   publicaciones = signal<IPublicacion[]>([]);
+  totalPublicaciones = signal<number>(0);
   
-  traerPublicaciones() {
-    const peticion = this.http.get(environment.apiUrl + 'publicaciones');
+  traerPublicaciones(limit: number, offset: number, usuario_id?: string, criterioOrden: string = 'fecha') {
+    let url = `${environment.apiUrl}publicaciones?orden=${criterioOrden}&limit=${limit}&offset=${offset}`;
+    if(usuario_id){
+      url += `&id_autor=${usuario_id}`
+    }
+    const peticion = this.http.get(url);
     peticion.subscribe((respuesta: any) => {
-      const lista_ordenada = respuesta as IPublicacion[];
-      lista_ordenada.sort((a, b) => b.fecha_publicacion.localeCompare(a.fecha_publicacion));
-      this.publicaciones.set(lista_ordenada.filter(publicacion => !publicacion.fecha_baja));
+      const lista = respuesta as IPublicacion[];
+      this.publicaciones.set(lista);
+      if (lista.length < limit && offset === 0) {
+        this.totalPublicaciones.set(lista.length);
+      } else if (lista.length === limit) {
+        this.totalPublicaciones.set(offset + limit + 1);
+      } else {
+        this.totalPublicaciones.set(offset + lista.length);
+      }
     });
   }
 
-  crearPublicacion(publicacion: IPost){
+  crearPublicacion(publicacion: IPost, callbackSuccess?: () => void){
     const peticion = this.http.post(environment.apiUrl + 'publicaciones', publicacion);
     peticion.subscribe( (respuesta: any) => {
       console.log('Publicacion creada :', respuesta);
-      this.traerPublicaciones();
+      if(callbackSuccess) callbackSuccess();
     })
   } 
 
-  cambiarLikes(id: string, nuevoValor: number, likes_usuarios: string[]){
+  cambiarLikes(id: string, nuevoValor: number, likes_usuarios: string[], callbackSuccess?: () => void){
     const payload_update = { likes: nuevoValor, likes_usuarios: likes_usuarios };
     const peticion = this.http.patch(environment.apiUrl + 'publicaciones/'+id, payload_update);
     peticion.subscribe( (respuesta: any) => {
       console.log('Publicacion actualizada :', respuesta);
-      this.traerPublicaciones();
+      if(callbackSuccess) callbackSuccess();
     })
   }
 
-  eliminarPublicacion(id: string, fecha_baja: boolean){
+  eliminarPublicacion(id: string, fecha_baja: boolean, callbackSuccess?: () => void){
     const payload_update = { fecha_baja: fecha_baja };
     const peticion = this.http.patch(environment.apiUrl + 'publicaciones/'+id, payload_update);
     peticion.subscribe( (respuesta: any) => {
       console.log('Publicacion actualizada :', respuesta);
-      this.traerPublicaciones();
+      if(callbackSuccess) callbackSuccess();
     })
   }
 }

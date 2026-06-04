@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, signal, inject } from '@angular/core';
+import { Component, input, InputSignal, signal, inject, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { IComentario } from './comentarios.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -30,6 +30,7 @@ export class Card {
   textoModal = signal<string>('');
   flagModalBoton = signal<boolean>(false);
   puedeEliminar = signal<boolean>(false);
+  cambioPublicacion = output<void>();
   comentarios: IComentario[] = [
     {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: new Date().toISOString()},
     {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: new Date().toISOString()},
@@ -82,13 +83,22 @@ export class Card {
       this.hasLike.set(true);
       this.likes.update(likes => likes + 1);
     }
-    this.pubService.cambiarLikes(this.publicacion()._id, this.likes_usuarios().length, this.likes_usuarios());
+    this.pubService.cambiarLikes(
+      this.publicacion()._id, 
+      this.likes_usuarios().length, 
+      this.likes_usuarios(),
+      () => {
+        this.cambioPublicacion.emit();
+      });
   }
   
   eliminarPublicacion(){
     this.mostrarModal.set(false);
     if(this.hayUsuario() && this.puedeEliminar()){
-      this.pubService.eliminarPublicacion(this.publicacion()._id, true);
+      this.pubService.eliminarPublicacion(
+        this.publicacion()._id, true, () => {
+          this.cambioPublicacion.emit();
+        });
     }
   }
 
