@@ -31,6 +31,7 @@ export class RegistroDto {
     @IsString()
     fecha_nacimiento!: string
 
+    @IsString()
     @IsOptional()
-    imagen?: string;
+    imagen_url: string;
 }

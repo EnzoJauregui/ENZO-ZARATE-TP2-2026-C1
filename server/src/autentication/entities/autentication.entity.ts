@@ -27,7 +27,7 @@ export class Autentication {
     fecha_nacimiento!: string;
   
     @Prop() 
-    imagen?: string;
+    imagen_url: string;
 
     @Prop()
     fecha_baja?: string;

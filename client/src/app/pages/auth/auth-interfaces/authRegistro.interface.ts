@@ -7,5 +7,5 @@ export interface AuthRegistro{
     descripcion: string;
     perfil: string;
     fecha_nacimiento: string
-    imagen: string;
+    imagen_url: string;
 }

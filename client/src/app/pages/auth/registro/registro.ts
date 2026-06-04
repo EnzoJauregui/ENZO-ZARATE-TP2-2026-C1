@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Modal } from '../../../components/modal/modal';
@@ -22,6 +22,7 @@ export class Registro {
     apellido: new FormControl("", [Validators.required]),
     username: new FormControl("", [Validators.required]),
     fecha_nacimiento: new FormControl("", [Validators.required]),
+    imagen_url: new FormControl("", [Validators.required]),
     perfil: new FormControl("usuario", [Validators.required]),
     descripcion: new FormControl("", [Validators.required, Validators.maxLength(150)]),
     repetirPassword:new FormControl("", [Validators.required, 
@@ -32,6 +33,16 @@ export class Registro {
                                    Validators.pattern(/^(?=.*[A-Z])(?=.*\d).*$/)]),
 
   });
+
+  constructor() {
+    effect(() => {
+      const url = this.auth.url_imagen();
+      if (url != "") {
+        this.formulario.patchValue({ imagen_url: url });
+        console.log("url: "+url);
+      }
+    });
+  }
 
   verificarConstrasenias(){
     const {password, repetirPassword} = this.formulario.value
@@ -44,6 +55,22 @@ export class Registro {
     return false;
   }
   
+  archivoSeleccionado(event: Event){
+    const input = event.target as HTMLInputElement;
+
+    if(input.files && input.files.length){
+      const archivo = input.files[0];
+      const formData = new FormData();
+      formData.append('imagen_url', archivo);
+      try{
+        this.auth.subirImagen(formData);
+      } catch(e: any){
+        this.mensajeError.set(e.message);
+        this.mostrarModal.set(true);
+      }
+    }
+  }
+
   accion(){
     if(this.formulario.invalid || this.verificarConstrasenias()) return;
     

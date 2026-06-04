@@ -12,6 +12,7 @@ export class AuthService {
   httpClient = inject(HttpClient);
   router = inject(Router);
   usuario = signal<any>(null);
+  url_imagen = signal<string>("");
   
   login(usuario: AuthLogin){
       const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
@@ -26,6 +27,19 @@ export class AuthService {
         console.log(this.usuario());
         this.router.navigateByUrl("/mi-perfil");
       });
+  }
+
+  subirImagen(formData: FormData){
+   const peticion = this.httpClient.post(
+    environment.apiUrl + 'autentication/upload', 
+    formData, { 
+      responseType: 'text' 
+    });
+
+    peticion.subscribe( (res: string) => {
+      this.url_imagen.set(res)
+      console.log(this.url_imagen());
+    });
   }
 
   registro(usuario: AuthRegistro){
