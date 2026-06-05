@@ -4,7 +4,7 @@ import { authRoutes } from './pages/auth/auth.routes';
 export const routes: Routes = [
     {
         path: "auth",
-        children: authRoutes,
+        loadChildren : () => import("./pages/auth/auth.routes").then((m) => m.authRoutes),
     },
     {
         path:"mi-perfil",
@@ -12,7 +12,7 @@ export const routes: Routes = [
     },
     {
         path: "publicaciones",
-        loadComponent : () => import("./pages/publicaciones/publicaciones").then((m) => m.Publicaciones),
+        loadChildren : () => import("./pages/publicaciones/publicacion.routes").then((m) => m.publicacionesRoutes),
     },
     {
         path:"",
