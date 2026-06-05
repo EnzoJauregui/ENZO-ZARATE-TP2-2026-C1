@@ -13,6 +13,7 @@ export class AuthService {
   router = inject(Router);
   usuario = signal<any>(null);
   url_imagen = signal<string>("");
+  imagen_subida = signal<boolean>(true);
   
   login(usuario: AuthLogin){
       const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
@@ -30,15 +31,15 @@ export class AuthService {
   }
 
   subirImagen(formData: FormData){
+    this.imagen_subida.set(false);
    const peticion = this.httpClient.post(
     environment.apiUrl + 'autentication/upload', 
     formData, { 
       responseType: 'text' 
     });
-
     peticion.subscribe( (res: string) => {
+      this.imagen_subida.set(true);
       this.url_imagen.set(res)
-      console.log(this.url_imagen());
     });
   }
 

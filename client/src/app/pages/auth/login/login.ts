@@ -25,7 +25,7 @@ export class Login {
 
   rellenarFormulario() {
     this.formulario.patchValue({
-      email: 'enzo@mail.com',
+      email: 'raulhgarcia@mail.com',
       password: '123456aA'
     });
   }  

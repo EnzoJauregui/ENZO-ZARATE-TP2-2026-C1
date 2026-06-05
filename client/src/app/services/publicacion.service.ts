@@ -14,7 +14,6 @@ export class PublicacionService {
   
   traerPublicaciones(limit: number, offset: number, usuario_id?: string, criterioOrden: string = 'fecha') {
     let url = `${environment.apiUrl}publicaciones?orden=${criterioOrden}&limit=${limit}&offset=${offset}`;
-    console.log(usuario_id);
     if(usuario_id){
       url += `&id_autor=${usuario_id}`
     }

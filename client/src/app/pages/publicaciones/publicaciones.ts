@@ -39,7 +39,16 @@ export class Publicaciones {
     return Math.ceil(total / this.limitePorPagina) || 1;
   });
 
-  constructor(){ effect( () => { this.cargarDatos(); } ) }
+  constructor(){ effect( () => { 
+    this.cargarDatos(); 
+    
+    const url = this.authService.url_imagen();
+    if (url != "") {
+      this.nuevaImagenUrl = url
+      console.log("url: "+url);
+    }
+    }); 
+  }
 
   cargarDatos(){
     const offSet = (this.paginaActual() - 1) * this.limitePorPagina;
@@ -59,6 +68,23 @@ export class Publicaciones {
 
   toggleInputImagen() {
     this.mostrarInputImagen = !this.mostrarInputImagen;
+    if(!this.mostrarInputImagen) this.nuevaImagenUrl = "";
+  }
+
+  subirImagen(event: Event){
+    const input = event.target as HTMLInputElement;
+
+    if(input.files && input.files.length){
+      const archivo = input.files[0];
+      const formData = new FormData();
+      formData.append('imagen_url', archivo);
+      try{
+        this.authService.subirImagen(formData);
+      } catch(e: any){
+        this.mensajeModal.set(e.message);
+        this.mostrarModal.set(true);
+      }
+    }
   }
 
   publicar() {
@@ -84,6 +110,7 @@ export class Publicaciones {
       this.formulario.reset();
       this.nuevaImagenUrl = '';
       this.mostrarInputImagen = false;
+      this.authService.url_imagen.set("");
       this.paginaActual.set(1);
       this.cargarDatos();
     });
