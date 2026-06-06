@@ -6,10 +6,15 @@
       <div class="d-flex justify-content-between align-items-baseline mb-1">
         <span class="fw-bold d-block small">{{ comentario().email_autor }}</span>
         <small class="text-muted" style="font-size: 0.75rem;">
-          {{ comentario().fecha_creacion }}
+          {{ comentario().fecha_creacion | date:'dd/MM/yy HH:mm' }}
         </small>
       </div>
-      <small class="text-muted">{{ comentario().contenido }}</small>
+      <div class="d-flex justify-content-between align-items-end">
+      <small class="text-muted flex-grow-1 pe-2">{{ comentario().contenido }}</small>
+      <button class="btn btn-outline-dark p-1 border-0 lh-1" title="Editar comentario">
+        <i class="bi bi-pencil"></i>
+      </button>
+      </div>
     </div>
   </div>
 </div>

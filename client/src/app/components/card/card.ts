@@ -16,7 +16,7 @@ export class Card {
   pubService = inject(PublicacionService);
   router = inject(Router);
 
-  publicacion= signal<IPublicacion>({} as IPublicacion);
+  publicacion: InputSignal<IPublicacion> = input<IPublicacion>({} as IPublicacion);
   hasLike= signal<boolean> (false);
   enPantallaCompleta: boolean = false;
   usuario_perfil: InputSignal<string> = input("usuario");
@@ -97,6 +97,8 @@ export class Card {
 
   mostrarEnPantallaCompleta() {
     this.enPantallaCompleta = true;
-    this.router.navigateByUrl
+    if(this.publicacion()._id){
+      this.router.navigateByUrl(`publicaciones/${this.publicacion()._id}`)
+    }
   }
 }

@@ -11,6 +11,7 @@ export class PublicacionService {
   http = inject(HttpClient);
   publicaciones = signal<IPublicacion[]>([]);
   publicacion = signal<IPublicacion>({} as IPublicacion)
+  esperandoRespuesta = signal<boolean>(false);
   totalPublicaciones = signal<number>(0);
   
   traerPublicaciones(limit: number, offset: number, usuario_id?: string, criterioOrden: string = 'fecha') {
@@ -40,11 +41,12 @@ export class PublicacionService {
   }
 
   traerPublicacion(id: string){
+    this.esperandoRespuesta.set(true);
     const peticion = this.http.get(environment.apiUrl + 'publicaciones/'+id);
     peticion.subscribe((res) => {
       this.publicacion.set(res as IPublicacion);
-      console.log(this.publicacion());
-    })
+      this.esperandoRespuesta.set(false)
+    });
   }
 
   crearPublicacion(publicacion: IPost, callbackSuccess?: () => void){
