@@ -1,1 +1,23 @@
-<p>publicacion works!</p>
+<div class="card-footer">
+  <h6 class="fw-bold mb-3 small text-uppercase text-dark">Comentarios</h6>
+  @if (comentarios.length === 0) {
+    <p class="text-muted">Este post aun no tiene comentarios. Se el primero en comentar.</p>
+  } @else {
+    @for (comentario of comentarios; track $index) {
+      <app-comentario></app-comentario>
+    }
+  }
+
+  <div class="input-group input-group-sm mt-2">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Escribe un comentario..."
+      aria-label="Escribe un comentario"
+      [formControl]="mensajeNuevo"
+    />
+    <button class="btn btn-dark" type="button" (click)="enviarComentario()" [disabled]="validar">
+      Enviar
+    </button>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { IPost } from '../pages/publicaciones/post.interface';
 export class PublicacionService {
   http = inject(HttpClient);
   publicaciones = signal<IPublicacion[]>([]);
+  publicacion = signal<IPublicacion>({} as IPublicacion)
   totalPublicaciones = signal<number>(0);
   
   traerPublicaciones(limit: number, offset: number, usuario_id?: string, criterioOrden: string = 'fecha') {
@@ -36,6 +37,14 @@ export class PublicacionService {
         }
       }
     });
+  }
+
+  traerPublicacion(id: string){
+    const peticion = this.http.get(environment.apiUrl + 'publicaciones/'+id);
+    peticion.subscribe((res) => {
+      this.publicacion.set(res as IPublicacion);
+      console.log(this.publicacion());
+    })
   }
 
   crearPublicacion(publicacion: IPost, callbackSuccess?: () => void){

@@ -50,47 +50,9 @@
         <small class="text-muted ms-1">({{ likes() }})</small>
       </button>
 
-      <button class="btn btn-outline-dark btn-sm" (click)="toggleComentarios()">
-        {{ mostrarComentarios ? 'Ocultar comentarios' : 'Ver comentarios' }}
+      <button class="btn btn-outline-dark btn-sm" (click)="mostrarEnPantallaCompleta()">
+        Ver en pantalla completa
       </button>
-    </div>
-    
-    <div [hidden]="!mostrarComentarios" class="card-footer">
-      <h6 class="fw-bold mb-3 small text-uppercase text-dark">Comentarios</h6>
-      @if(comentarios.length === 0) {
-        <p class="text-muted">Este post aun no tiene comentarios. Se el primero en comentar.</p>
-      } @else {
-        @for (comentario of comentarios; track $index) { 
-          <div class=" mb-3 backend-comments">
-            <div class="d-flex mb-2">
-              <div
-                class="card-comentarios flex-grow-1 p-2 rounded shadow-sm"
-              >
-                <div class="d-flex justify-content-between align-items-baseline mb-1">
-                  <span class="fw-bold d-block small">{{ comentario.nombre }}</span>
-                  <small class="text-muted" style="font-size: 0.75rem;">
-                    {{ comentario.fecha }}
-                  </small>
-                </div>
-                <small class="text-muted">{{ comentario.texto }}</small>
-              </div>
-            </div>
-          </div>
-        }
-      }
-
-      <div class="input-group input-group-sm mt-2">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Escribe un comentario..."
-          aria-label="Escribe un comentario"
-          [formControl]="mensajeNuevo"
-        />
-        <button class="btn btn-dark" type="button" (click)="enviarComentario()" [disabled]="validar">
-          Enviar
-        </button>
-      </div>
     </div>
   </div>
 </div>

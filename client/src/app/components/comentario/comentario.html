@@ -1,0 +1,15 @@
+<div class=" mb-3 backend-comments">
+  <div class="d-flex mb-2">
+    <div
+      class="card-comentarios flex-grow-1 p-2 rounded shadow-sm"
+    >
+      <div class="d-flex justify-content-between align-items-baseline mb-1">
+        <span class="fw-bold d-block small">{{ comentario().email_autor }}</span>
+        <small class="text-muted" style="font-size: 0.75rem;">
+          {{ comentario().fecha_creacion }}
+        </small>
+      </div>
+      <small class="text-muted">{{ comentario().contenido }}</small>
+    </div>
+  </div>
+</div>

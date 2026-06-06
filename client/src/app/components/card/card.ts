@@ -1,10 +1,10 @@
 import { Component, input, InputSignal, signal, inject, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { IComentario } from './comentarios.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PublicacionService } from '../../services/publicacion.service';
 import { IPublicacion } from '../../pages/publicaciones/publicacion.interface';
 import { Modal } from '../modal/modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -14,11 +14,11 @@ import { Modal } from '../modal/modal';
 })
 export class Card {
   pubService = inject(PublicacionService);
+  router = inject(Router);
 
-  publicacion: InputSignal<IPublicacion> = input({} as IPublicacion);
+  publicacion= signal<IPublicacion>({} as IPublicacion);
   hasLike= signal<boolean> (false);
-  mensajeNuevo = new FormControl('', [Validators.required])
-  mostrarComentarios: boolean = false;
+  enPantallaCompleta: boolean = false;
   usuario_perfil: InputSignal<string> = input("usuario");
   usuario_email: InputSignal<string> = input("email");
   id_usuario_like = input<string>("");
@@ -31,11 +31,7 @@ export class Card {
   flagModalBoton = signal<boolean>(false);
   puedeEliminar = signal<boolean>(false);
   cambioPublicacion = output<void>();
-  comentarios: IComentario[] = [
-    {nombre: "UsuarioEjemplo", texto: "Este es un comentario de ejemplo.", fecha: new Date().toISOString()},
-    {nombre: "OtroUsuario", texto: "Otro comentario de ejemplo.", fecha: new Date().toISOString()},
-    {nombre: "TercerUsuario", texto: "Un tercer comentario de ejemplo.", fecha: new Date().toISOString()}
-  ];
+ 
 
   ngOnInit() {
     this.likes.set(this.publicacion().likes || 0);
@@ -51,19 +47,9 @@ export class Card {
     }
   }
 
-  get validar(): boolean {
-    const mensajeLimpio = this.mensajeNuevo.value?.trim();
-    return this.mensajeNuevo.invalid || !mensajeLimpio;
-  }
-
   verificarPuedeEliminar() {
     return this.publicacion().email_autor == this.usuario_email()  
             || this.usuario_perfil() === "administrador";
-  }
-
-  enviarComentario() {
-    console.log('Comentario enviado:', this.mensajeNuevo.value);
-    this.mensajeNuevo.reset();
   }
 
   toggleLike() {
@@ -109,7 +95,8 @@ export class Card {
     this.flagModalBoton.set(true);
   }
 
-  toggleComentarios() {
-    this.mostrarComentarios = !this.mostrarComentarios;
+  mostrarEnPantallaCompleta() {
+    this.enPantallaCompleta = true;
+    this.router.navigateByUrl
   }
 }
