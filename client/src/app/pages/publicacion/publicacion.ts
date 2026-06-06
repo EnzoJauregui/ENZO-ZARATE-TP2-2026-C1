@@ -18,7 +18,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class Publicacion{
   authService = inject(AuthService);
   publicacionService = inject(PublicacionService);
-  route = inject(ActivatedRoute)
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+
   usuario = this.authService.usuario;
   publicacion = computed(() => this.publicacionService.publicacion());
 
@@ -66,6 +68,9 @@ export class Publicacion{
     return this.mensajeNuevo.invalid || !mensajeLimpio;
   }
 
+  volver(){
+    this.router.navigateByUrl('/publicaciones');
+  }
   enviarComentario() {
     console.log('Comentario enviado:', this.mensajeNuevo.value);
     this.mensajeNuevo.reset();
