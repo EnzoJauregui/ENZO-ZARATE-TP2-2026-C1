@@ -38,6 +38,7 @@ export class AutenticationService {
     const payload = {
       _id: usuario._id,
       email: usuario.email,
+      rol: usuario.perfil,
     };
     const token: string = sign(payload, process.env.CLAVE_SECRETA!, {
       algorithm: 'HS256',

@@ -25,7 +25,7 @@ export class AutenticationController {
       httpOnly: true,
       sameSite: 'strict',
       //secure: true,
-      expires: new Date(Date.now() + 1000*15)
+      expires: new Date(Date.now() + 1000*60*15)
     });
     return usuario
   }

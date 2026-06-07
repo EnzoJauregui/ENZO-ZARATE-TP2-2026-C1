@@ -62,6 +62,7 @@
             }
           </div>
         }
+        @if (comentarios()?.length !== 0 && comentarios()?.length !== 1 && comentarios()?.length !== 2) {
         <div class="d-grid gap-2 col-6 mx-auto mb-3">
           <button
             type="button"
@@ -76,7 +77,7 @@
               Mostrar menos
             }
           </button>
-        </div>
+        </div>}
         }
       <div class="input-group input-group-sm mt-2">
         <input

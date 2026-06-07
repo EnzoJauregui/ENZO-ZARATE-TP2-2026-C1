@@ -3,28 +3,28 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema()
 export class Autentication {
     @Prop({ required: true })
-    nombre!: string;
+    nombre: string;
   
     @Prop({ required: true })
-    apellido!: string;
+    apellido: string;
   
     @Prop({ required: true, unique: true })
-    email!: string;
+    email: string;
   
     @Prop({ required: true })
-    password!: string;
+    password: string;
   
     @Prop({ required: true })
-    username!: string;
+    username: string;
   
     @Prop({ required: true })
-    descripcion!: string;
+    descripcion: string;
   
     @Prop({ required: true })
-    perfil!: string;
+    perfil: string;
   
     @Prop({ required: true })
-    fecha_nacimiento!: string;
+    fecha_nacimiento: string;
   
     @Prop() 
     imagen_url: string;

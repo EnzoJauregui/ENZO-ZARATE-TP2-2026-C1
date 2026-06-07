@@ -18,12 +18,13 @@ export class JtwGuard implements CanActivate {
     if(tipo !== "Bearer" || !token) throw new BadRequestException("El formato de autorizacion del token debe ser Bearer");
     try{
       const tokenValidado = verify(token,  process.env.CLAVE_SECRETA!);
-      const { email } = tokenValidado as {email: string}
+      const { email, perfil } = tokenValidado as {email: string, perfil: string}
 
       if(!request.body) {
-        request.body = { email };
+        request.body = { email, perfil };
       } else {
         request.body.emailDelToken = email;
+        request.body.perfil = perfil
       }
       return true;
     } catch(error){
