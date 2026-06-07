@@ -1,8 +1,9 @@
-export interface IComentario{
+export interface IComentarioParcial{
     email_autor: string;
+    id_autor: string
     id_publicacion: string
     contenido: string;
     fecha_creacion: string;
     fue_editado: boolean
-    fecha_baja?: string;
+    dado_de_baja?: boolean;
 }

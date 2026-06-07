@@ -10,11 +10,54 @@
         </small>
       </div>
       <div class="d-flex justify-content-between align-items-end">
-      <small class="text-muted flex-grow-1 pe-2">{{ comentario().contenido }}</small>
-      <button class="btn btn-outline-dark p-1 border-0 lh-1" title="Editar comentario">
-        <i class="bi bi-pencil"></i>
-      </button>
+      <small class="text-muted flex-grow-1 pe-2">
+        {{ comentario().contenido }}
+      </small>
+      @if(esElAutor){
+        @if(comentario().fue_editado){
+          <small class="text-muted fst-italic d-block text-end" style="font-size: 0.7rem;">
+            (Editado)
+          </small>
+        }@else{
+          <button 
+            class="btn btn-outline-dark p-1 border-0 lh-1" 
+            title="Editar comentario"
+            (click)="editarMensaje()">
+            <i class="bi bi-pencil"></i>
+          </button>
+        }
+      }
       </div>
     </div>
   </div>
+  @if(editarComentario){
+
+    <div class="input-group input-group-sm mt-2">
+      <input
+      type="text"
+      class="form-control"
+      placeholder="Escribe un comentario..."
+      aria-label="Escribe un comentario"
+      [formControl]="comentarioNuevo"
+      />
+      <button
+      class="btn btn-danger"
+      title="Cancelar edicion"
+      type="button"
+      (click)="cancelarEdicion()"
+      
+      >
+      <i class="bi bi-x-circle"></i>
+      </button>
+      <button
+      class="btn btn-success"
+      tittle="Confirmar edicion"
+      type="button"
+      (click)="confirmarEdicion()"
+      [disabled]="validar || !hayUsuario"
+      >
+      <i class="bi bi-check-circle"></i>
+      </button>
+    </div>
+  }
 </div>

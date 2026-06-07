@@ -48,14 +48,36 @@
     </div>
     <div class="card-footer">
       <h6 class="fw-bold mb-3 small text-uppercase text-dark">Comentarios</h6>
-      @if (comentarios.length === 0) {
-        <p class="text-muted">Este post aun no tiene comentarios. Se el primero en comentar.</p>
-      } @else {
-        @for (comentario of comentarios; track $index) {
-          <app-comentario [comentario]="comentario"></app-comentario>
+      @if (comentarios(); as lista) {
+        @if (comentarios()?.length === 0) {
+          <p class="text-muted">Este post aun no tiene comentarios. Se el primero en comentar.</p>
+        } @else {
+          <div class="d-flex flex-column gap-2 mb-3">
+            @for (comentario of comentarios(); track comentario._id) {
+              <app-comentario
+                [comentario]="comentario"
+                [user_id]="usuario()?._id"
+                (comentarioEditado)="cargarComentarios()"
+              ></app-comentario>
+            }
+          </div>
         }
-      }
-
+        <div class="d-grid gap-2 col-6 mx-auto mb-3">
+          <button
+            type="button"
+            class="btn btn-outline-dark btn-sm rounded-pill"
+            (click)="actualizarComentarios()"
+          >
+            @if (this.primerCarga()) {
+              <i class="bi bi-arrow-down-circle-fill me-1"></i>
+              Mostrar mas
+            } @else {
+              <i class="bi bi-arrow-up-circle-fill me-1"></i>
+              Mostrar menos
+            }
+          </button>
+        </div>
+        }
       <div class="input-group input-group-sm mt-2">
         <input
           type="text"
@@ -68,7 +90,7 @@
           class="btn btn-dark"
           type="button"
           (click)="enviarComentario()"
-          [disabled]="validar"
+          [disabled]="validar || !hayUsuario"
         >
           Enviar
         </button>
