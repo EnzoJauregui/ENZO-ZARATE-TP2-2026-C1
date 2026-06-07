@@ -5,26 +5,41 @@
       <span>NetSpace</span>
     </a>
     <ul class="navbar-nav ms-auto align-items-center gap-2">
+      @if(usuario() != null){
+        @if (usuario()?.perfil === "administrador") 
+        {
+          <li class="nav-item">
+            <a class="nav-link text-white-50 text-hover-white" routerLink="/dashboard" routerLinkActive="text-white fw-bold">
+              <i class="bi bi-calculator"></i>
+              Estadisticas
+            </a>
+          </li>
+        }
+      }
       <li class="nav-item">
         <a class="nav-link text-white-50 text-hover-white" routerLink="/publicaciones" routerLinkActive="text-white fw-bold">
+          <i class="bi bi-book"></i>
           Publicaciones
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white-50 text-hover-white" routerLink="/mi-perfil" routerLinkActive="text-white fw-bold">
-          Mi Perfil
+          <i class="bi bi-person"></i>
+          Perfil
         </a>
       </li>
       @if (usuario() == null) {
         <li class="nav-item">
           <button class="btn btn-light btn-sm rounded-pill px-3" routerLink="/auth/login">
+            <i class="bi bi-box-arrow-in-right"></i>
             Iniciar Sesion
           </button>
         </li>
       } @else {
         <li class="nav-item ms-2">
           <button class="btn btn-outline-light btn-sm rounded-pill px-3" (click)="cerrarSesion()">
-            Cerrar sesion
+            LogOut
+            <i class="bi bi-box-arrow-in-left"></i>   
           </button>
         </li>
       }

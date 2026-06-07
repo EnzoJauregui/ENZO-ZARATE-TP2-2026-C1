@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { authRoutes } from './pages/auth/auth.routes';
 
 export const routes: Routes = [
     {
@@ -13,6 +12,10 @@ export const routes: Routes = [
     {
         path: "publicaciones",
         loadChildren : () => import("./pages/publicaciones/publicacion.routes").then((m) => m.publicacionesRoutes),
+    },
+    {
+        path: "dashboard",
+        loadChildren: () => import("./pages/dashboard/dashboard.routes").then( (m) => m.dashboardRoutes),
     },
     {
         path:"",
