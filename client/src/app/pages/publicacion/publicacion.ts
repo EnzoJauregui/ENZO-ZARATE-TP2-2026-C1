@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { IComentarioParcial } from './comentarios.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Modal } from '../../components/modal/modal';
@@ -28,7 +28,6 @@ export class Publicacion{
   publicacion = computed(() => this.publicacionService.publicacion());
   comentarios = computed(() => this.comentarioService.comentarios())
   mensajeNuevo = new FormControl('', [Validators.required])
-  cantidadComentarios = signal<number>(0);
  
   ngOnInit(){
     if (this.id_publicacion){
@@ -57,14 +56,6 @@ export class Publicacion{
       return true;
     }
     return false;
-  }
-
-  get hayMasDeTres(): boolean{
-    if(this.cantidadComentarios() > 3){
-      return true;
-    } else {
-      return false;
-    }
   }
 
   volver(){

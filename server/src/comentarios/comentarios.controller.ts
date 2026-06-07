@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ComentariosService } from './comentarios.service';
 import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
@@ -13,8 +13,16 @@ export class ComentariosController {
   }
 
   @Get()
-  findAll() {
-    return this.comentariosService.findAll();
+  findAll(
+    @Query("id_publicacion") id_publicacion: string, 
+    @Query("limit") limit?: string,
+    @Query("offset") offset?: string
+  ) {
+    return this.comentariosService.findAll({ 
+      id_publicacion, 
+      limit: limit ? parseInt(limit, 10) : undefined,
+      offset: offset ? parseInt(offset, 10) : undefined
+    });
   }
 
   @Get(':id')
@@ -24,7 +32,7 @@ export class ComentariosController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateComentarioDto: UpdateComentarioDto) {
-    return this.comentariosService.update(+id, updateComentarioDto);
+    return this.comentariosService.update(id, updateComentarioDto);
   }
 
   @Delete(':id')

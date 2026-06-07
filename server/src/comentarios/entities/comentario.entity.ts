@@ -2,7 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
 export class Comentario {
-    
+    @Prop({ required: true })
+    id_publicacion: string;
+
+    @Prop({ required: true })
+    id_autor: string;
+
     @Prop({ required: true })
     email_autor: string;
     
@@ -16,7 +21,7 @@ export class Comentario {
     fue_editado: boolean
 
     @Prop()
-    fecha_baja?: string;
+    dado_de_baja?: boolean;
 }
 
 export const ComentarioSchema = SchemaFactory.createForClass(Comentario);

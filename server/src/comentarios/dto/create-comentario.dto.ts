@@ -3,6 +3,14 @@ import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString } from "class-vali
 export class CreateComentarioDto {
     @IsString()
     @IsNotEmpty()
+    id_autor: string;
+
+    @IsString()
+    @IsNotEmpty()
+    id_publicacion: string;
+
+    @IsString()
+    @IsNotEmpty()
     contenido: string;
 
     @IsEmail()
@@ -18,5 +26,5 @@ export class CreateComentarioDto {
 
     @IsBoolean()
     @IsOptional()
-    fecha_baja: boolean;
+    dado_de_baja: boolean;
 }
