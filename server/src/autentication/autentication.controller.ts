@@ -60,9 +60,26 @@ export class AutenticationController {
   traerUsuarios(){
     return this.autenticationService.traerTodos();
   }
+
+  @UseGuards(JtwGuard)
+  @Post("/data/refresh")
+  async refrescarToken(
+    @Body('emailDelToken') email: string,
+    @Body("perfil") perfil: string,
+    @Res({ passthrough: true }) response: Response
+  ) {
+    const {token, usuario} = await this.autenticationService.refrescarToken(email);
+    response.cookie("Authorization", token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      //secure: true,
+      expires: new Date(Date.now() + 1000*60*15)
+    });
+    return usuario
+  }
  
   @UseGuards(JtwGuard)
-  @Get("data/jwt")
+  @Get("/data/jwt")
   traerConGuard(@Body('emailDelToken') email: any){
     console.log(email);
     return {message: "Acceso otorgado a "+email}

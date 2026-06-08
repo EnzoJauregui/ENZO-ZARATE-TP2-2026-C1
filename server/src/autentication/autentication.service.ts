@@ -34,11 +34,18 @@ export class AutenticationService {
     return this.crearToken(usuario);
   }
 
+  async refrescarToken(email: string){
+    const usuario = await this.AutenticationModel.findOne({ email });
+    if (!usuario) throw new UnauthorizedException('Usuario no encontrado');
+
+    return this.crearToken(usuario);
+  }
+
   crearToken(usuario: any) {
     const payload = {
       _id: usuario._id,
       email: usuario.email,
-      rol: usuario.perfil,
+      perfil: usuario.perfil,
     };
     const token: string = sign(payload, process.env.CLAVE_SECRETA!, {
       algorithm: 'HS256',
