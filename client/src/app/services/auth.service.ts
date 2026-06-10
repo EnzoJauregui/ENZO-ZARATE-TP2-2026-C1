@@ -4,6 +4,7 @@ import { AuthRegistro } from '../pages/auth/auth-interfaces/authRegistro.interfa
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Router } from '@angular/router';
+import { Cronometro } from './cronometro';
 
 @Injectable({
   providedIn: 'root',
@@ -11,25 +12,47 @@ import { Router } from '@angular/router';
 export class AuthService {
   httpClient = inject(HttpClient);
   router = inject(Router);
+  cronometro = inject(Cronometro);
+
   usuario = signal<any>(null);
   url_imagen = signal<string>("");
   imagen_subida = signal<boolean>(true);
   
   login(usuario: AuthLogin){
       const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
-      usuario, {
-        headers: {
-          'Content-Type': 'application/json',
-        }, 
+       usuario, {
+        headers: { 'Content-Type': 'application/json', }, 
         credentials: "include",
       });
       peticion.subscribe((respuesta: any) => {
-        this.usuario.set(respuesta);
-        console.log(this.usuario());
-        this.router.navigateByUrl("/mi-perfil");
+        this.manejarRespuesta(respuesta);
       });
   }
 
+  registro(usuario: AuthRegistro){
+    const peticion = this.httpClient.post(environment.apiUrl+'autentication/registro',
+      usuario, {
+        headers: { 'Content-Type': 'application/json', }, 
+        credentials: "include",
+      });
+      peticion.subscribe((respuesta: any) => {
+        this.manejarRespuesta(respuesta);
+      });
+    }
+
+  cerrarSesion(){
+    this.usuario.set(null);
+    this.cronometro.reiniciarContador();
+    this.router.navigateByUrl("/auth/login");
+  }
+
+  manejarRespuesta(respuesta: any){
+    this.usuario.set(respuesta);
+    this.cronometro.iniciarContador();
+    console.log(this.usuario());
+    this.router.navigateByUrl("/mi-perfil");
+  }
+    
   subirImagen(formData: FormData){
     this.imagen_subida.set(false);
    const peticion = this.httpClient.post(
@@ -41,25 +64,5 @@ export class AuthService {
       this.imagen_subida.set(true);
       this.url_imagen.set(res)
     });
-  }
-
-  registro(usuario: AuthRegistro){
-    const peticion = this.httpClient.post(environment.apiUrl+'autentication/registro',
-      usuario, {
-        headers: {
-          'Content-Type': 'application/json',
-        }, 
-        credentials: "include",
-      });
-      peticion.subscribe((respuesta: any) => {
-        this.usuario.set(respuesta);
-        console.log(this.usuario());
-        this.router.navigateByUrl("/mi-perfil");
-      });
-  }
-
-  cerrarSesion(){
-    this.usuario.set(null);
-    this.router.navigateByUrl("/auth/login");
   }
 }

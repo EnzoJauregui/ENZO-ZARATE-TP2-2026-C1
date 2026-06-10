@@ -4,6 +4,7 @@
       <img src="logo.ico" alt="logo" width="30" height="30">
       <span>NetSpace</span>
     </a>
+    <h3> {{this.auth.cronometro.tiempoAMostrar()}}</h3>
     <ul class="navbar-nav ms-auto align-items-center gap-2">
       @if(usuario() != null){
         @if (usuario()?.perfil === "administrador") 
@@ -11,7 +12,7 @@
           <li class="nav-item">
             <a class="nav-link text-white-50 text-hover-white" routerLink="/dashboard" routerLinkActive="text-white fw-bold">
               <i class="bi bi-calculator"></i>
-              Estadisticas
+              Dashboard
             </a>
           </li>
         }
@@ -46,5 +47,15 @@
     </ul>
   </div>
 </nav>
+
+
+<app-modal
+  textoModal="Advertencia"
+  textoModal="Extender Sesion?"
+  [flagAbrir]="mostrarModal()"
+  [flagModalBoton]="true"
+  (cerrarModal)="noExtenderSesion()"
+  (confirmarModal)="false"
+></app-modal>
 
 <router-outlet />

@@ -50,7 +50,7 @@ export class AutenticationService {
     const token: string = sign(payload, process.env.CLAVE_SECRETA!, {
       algorithm: 'HS256',
       audience: 'registro',
-      expiresIn: '15m',
+      expiresIn: '1m',
     });
     return { token, usuario };
   }
