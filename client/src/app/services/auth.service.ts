@@ -52,8 +52,15 @@ export class AuthService {
   verificarConexion(){
     const peticion = this.httpClient.post(environment.apiUrl+'autentication/autorizar', {}, { withCredentials: true });
     peticion.subscribe({
-    next: (res) => {
-        console.log("El token es válido, datos del usuario:", res);
+    next: (res: any) => {
+      if(res.valido){
+        this.usuario.set(res.usuario);
+        this.cronometro.iniciarContador();
+        this.router.navigateByUrl("/publicaciones");
+      }
+      }, error: ()=>{
+        console.log("error");
+        this.router.navigateByUrl("/auth/login");
       }
     });
   }

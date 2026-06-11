@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cargando',
@@ -6,4 +7,14 @@ import { Component } from '@angular/core';
   templateUrl: './cargando.html',
   styleUrl: './cargando.css',
 })
-export class Cargando {}
+export class Cargando implements OnInit {
+  auth = inject(AuthService);
+  
+  ngOnInit(): void {
+    this.vallidarTokenInicial();
+  }
+
+  vallidarTokenInicial(){
+    this.auth.verificarConexion();
+  }
+}

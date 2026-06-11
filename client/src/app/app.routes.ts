@@ -14,12 +14,16 @@ export const routes: Routes = [
         loadChildren : () => import("./pages/publicaciones/publicacion.routes").then((m) => m.publicacionesRoutes),
     },
     {
+        path: "cargando",
+        loadComponent : () => import("./pages/cargando/cargando").then((m) => m.Cargando),
+    },
+    {
         path: "dashboard",
         loadChildren: () => import("./pages/dashboard/dashboard.routes").then( (m) => m.dashboardRoutes),
     },
     {
         path:"",
-        redirectTo:"auth",
+        redirectTo:"cargando",
         pathMatch: "full"
     }
     

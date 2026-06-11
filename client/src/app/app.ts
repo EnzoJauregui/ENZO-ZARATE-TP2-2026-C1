@@ -1,4 +1,4 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal, effect, OnInit } from '@angular/core';
 import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Modal } from './components/modal/modal';
@@ -9,7 +9,7 @@ import { Modal } from './components/modal/modal';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit{
   protected readonly title = signal('client');
 
   auth = inject(AuthService);
@@ -26,6 +26,10 @@ export class App {
         this.auth.verificarConexion()
       }
     });
+  }
+
+  ngOnInit(){
+    this.auth.router.navigateByUrl("/cargando");
   }
 
   cerrarSesion() {
