@@ -10,7 +10,7 @@ export class Cronometro {
   extenderTiempo = signal<boolean>(false);
 
   tiempoMaximo: number = 10;   
-  tiempoMaximoFinal: number = 15;
+  tiempoMaximoFinal: number = 25;
   intervalo: number | null = null
 
   tiempoAMostrar = computed(() => {
@@ -50,8 +50,10 @@ export class Cronometro {
     this.detenerContador();
     if(this.extenderTiempo()){
       this.tiempoMaximoFinalAlcanzado.set(true);
+      this.tiempoMedioAlcanzado.set(false);
     } else {
       this.tiempoMedioAlcanzado.set(true);
+      this.tiempoMaximoFinalAlcanzado.set(false);
     }
   }
 

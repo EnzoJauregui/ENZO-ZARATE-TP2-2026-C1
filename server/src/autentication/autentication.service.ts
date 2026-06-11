@@ -18,7 +18,6 @@ export class AutenticationService {
     const { password } = registroDto;
     registroDto.password = await bcryptjs.hash(password, 10);
     const usuario = await this.AutenticationModel.create(registroDto);
-    console.log(usuario);
 
     return this.crearToken(usuario);
   }
@@ -32,6 +31,12 @@ export class AutenticationService {
 
     usuario.password = loginDto.password;
     return this.crearToken(usuario);
+  }
+
+  async obtenerUsuarioPorEmail(email: string){
+    const usuario = await this.AutenticationModel.findOne({ email });
+    if (!usuario) throw new UnauthorizedException('Usuario no encontrado');
+    return usuario;
   }
 
   async refrescarToken(email: string){
@@ -50,7 +55,7 @@ export class AutenticationService {
     const token: string = sign(payload, process.env.CLAVE_SECRETA!, {
       algorithm: 'HS256',
       audience: 'registro',
-      expiresIn: '15m',
+      expiresIn: '20s',
     });
     return { token, usuario };
   }

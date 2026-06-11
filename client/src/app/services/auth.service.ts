@@ -22,7 +22,7 @@ export class AuthService {
       const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
        usuario, {
         headers: { 'Content-Type': 'application/json', }, 
-        credentials: "include",
+        withCredentials: true
       });
       peticion.subscribe((respuesta: any) => {
         this.manejarRespuesta(respuesta);
@@ -33,7 +33,7 @@ export class AuthService {
     const peticion = this.httpClient.post(environment.apiUrl+'autentication/registro',
       usuario, {
         headers: { 'Content-Type': 'application/json', }, 
-        credentials: "include",
+        withCredentials: true
       });
       peticion.subscribe((respuesta: any) => {
         this.manejarRespuesta(respuesta);
@@ -47,6 +47,15 @@ export class AuthService {
       this.cronometro.iniciarContador();
       console.log( res);
     })
+  }
+
+  verificarConexion(){
+    const peticion = this.httpClient.post(environment.apiUrl+'autentication/autorizar', {}, { withCredentials: true });
+    peticion.subscribe({
+    next: (res) => {
+        console.log("El token es válido, datos del usuario:", res);
+      }
+    });
   }
 
   cerrarSesion(){

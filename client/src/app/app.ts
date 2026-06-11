@@ -23,8 +23,7 @@ export class App {
         this.mostrarModal.set(true);
       }
       if(this.auth.cronometro.tiempoMaximoFinalAlcanzado()){
-        this.auth.cerrarSesion();
-        this.mostrarModal.set(false)
+        this.auth.verificarConexion()
       }
     });
   }

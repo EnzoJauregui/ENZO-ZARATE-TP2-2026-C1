@@ -51,7 +51,7 @@ export class AutenticationController {
       httpOnly: true,
       sameSite: 'strict',
       //secure: true,
-      expires: new Date(Date.now() + 1000*60*15)
+      expires: new Date(Date.now() + 1000*50)
     });
     return usuario
   }
@@ -73,15 +73,21 @@ export class AutenticationController {
       httpOnly: true,
       sameSite: 'strict',
       //secure: true,
-      expires: new Date(Date.now() + 1000*60)
+      expires: new Date(Date.now() + 1000*40)
     });
     return usuario
   }
  
   @UseGuards(JtwGuard)
-  @Get("/data/jwt")
-  traerConGuard(@Body('emailDelToken') email: any){
-    console.log(email);
-    return {message: "Acceso otorgado a "+email}
+  @Post('/autorizar')
+  async autorizarUsuario(
+    @Body('emailDelToken') email: string,
+    @Body('perfil') perfil: string
+  ) {
+    const usuario = await this.autenticationService.obtenerUsuarioPorEmail(email);
+    return {
+      valido: true,
+      usuario
+    };
   }
 }
