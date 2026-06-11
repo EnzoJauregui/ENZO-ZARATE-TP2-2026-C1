@@ -12,7 +12,7 @@ export const dashboardRoutes: Routes = [
     },
     {
         path:"",
-        redirectTo:"estadisticas",
+        redirectTo:"usuarios",
         pathMatch: "full"
     }
 ];
