@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model} from 'mongoose';
 import { Autentication } from './entities/autentication.entity';
 import * as bcryptjs from 'bcrypt';
-import { sign, decode, verify, TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken'
+import { sign } from 'jsonwebtoken'
 
 @Injectable()
 export class AutenticationService {
@@ -50,52 +50,10 @@ export class AutenticationService {
     const token: string = sign(payload, process.env.CLAVE_SECRETA!, {
       algorithm: 'HS256',
       audience: 'registro',
-      expiresIn: '1m',
+      expiresIn: '15m',
     });
     return { token, usuario };
   }
-
-  // verificar(authHeader: string) {
-  //   if(!authHeader) throw new BadRequestException('Falta el encabezado de autorizaacion')
-
-  //   const [tipo, token] = authHeader.split(" ");
-
-  //   if(tipo !== "Bearer" || !token) throw new BadRequestException("El formato de autorizacion del token debe ser Bearer");
-  //   try{
-  //     const tokenValidado = verify(token,  process.env.CLAVE_SECRETA!)
-  //     return tokenValidado;
-  //   } catch(error){
-  //     if(error instanceof TokenExpiredError) throw new UnauthorizedException('El token ha expirado');
-  //     if(error instanceof JsonWebTokenError) throw new UnauthorizedException("Token invalido o fallo en la firma");
-      
-  //     throw new InternalServerErrorException("Error interno al verificar el token");
-  //   }
-  // }
-
-  // guardarEnCookie(userData: LoginDto) {
-  //   const payload = {
-  //     sub: userData.email,
-  //     email: userData.email,
-  //   };
-  //   const token: string = sign(payload, process.env.CLAVE_SECRETA!, {
-  //     algorithm: 'HS256',
-  //     audience: 'registro',
-  //     expiresIn: '15m',
-  //   });
-  //   return { token: token };
-  // }
-
-  // verificarDesdeCookie(token: string){
-  //   try{
-  //     const tokenValidado = verify(token,  process.env.CLAVE_SECRETA!)
-  //     return tokenValidado;
-  //   } catch(error){
-  //     if(error instanceof TokenExpiredError) throw new UnauthorizedException('El token ha expirado');
-  //     if(error instanceof JsonWebTokenError) throw new UnauthorizedException("Token invalido o fallo en la firma");
-      
-  //     throw new InternalServerErrorException("Error interno al verificar el token");
-  //   }
-  // }
 
   async traerTodos() {
     const todos = await this.AutenticationModel.find();

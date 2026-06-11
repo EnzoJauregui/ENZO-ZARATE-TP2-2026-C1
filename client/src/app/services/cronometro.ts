@@ -53,8 +53,6 @@ export class Cronometro {
     } else {
       this.tiempoMedioAlcanzado.set(true);
     }
-    console.log(this.tiempoMedioAlcanzado())
-    console.log(this.tiempoMaximoFinalAlcanzado());
   }
 
   detenerContador() {

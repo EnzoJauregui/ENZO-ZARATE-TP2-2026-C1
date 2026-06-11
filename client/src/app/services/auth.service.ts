@@ -38,7 +38,16 @@ export class AuthService {
       peticion.subscribe((respuesta: any) => {
         this.manejarRespuesta(respuesta);
       });
-    }
+  }
+
+  refrescarConexion(){
+    const peticion = this.httpClient.post(environment.apiUrl+'autentication/refresh', {}, { withCredentials: true });
+    peticion.subscribe( (res) => {
+      this.usuario.set(res);
+      this.cronometro.iniciarContador();
+      console.log( res);
+    })
+  }
 
   cerrarSesion(){
     this.usuario.set(null);

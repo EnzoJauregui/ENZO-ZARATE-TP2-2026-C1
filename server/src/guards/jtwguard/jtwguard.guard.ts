@@ -9,13 +9,24 @@ export class JtwGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     
-  const request: Request = context.switchToHttp().getRequest();
-  const authHeader: string | undefined = request.headers.authorization;
-    if(!authHeader) throw new BadRequestException('Falta el encabezado de autorizaacion')
+    const request: Request = context.switchToHttp().getRequest();
+    let token: string | undefined;
 
-    const [tipo, token] = authHeader.split(" ");
+    const authHeader: string | undefined = request.headers.authorization;
+
+    if(authHeader) {
+      const [tipo, tokenHeader] = authHeader.split(" ");
+      if(tipo === "Bearer" && tokenHeader){
+        token = tokenHeader;
+      } else {
+        throw new BadRequestException("El formato de autorizacion del token debe ser Bearer");
+      } 
+    } else if (request.cookies && request.cookies["Authorization"]) {
+      token = request.cookies["Authorization"];
+    }
+  
+    if(!token) throw new BadRequestException('Falta el encabezado de autorizaacion o la cookie de la sesion');
     
-    if(tipo !== "Bearer" || !token) throw new BadRequestException("El formato de autorizacion del token debe ser Bearer");
     try{
       const tokenValidado = verify(token,  process.env.CLAVE_SECRETA!);
       const { email, perfil } = tokenValidado as {email: string, perfil: string}

@@ -62,7 +62,7 @@ export class AutenticationController {
   }
 
   @UseGuards(JtwGuard)
-  @Post("/data/refresh")
+  @Post("/refresh")
   async refrescarToken(
     @Body('emailDelToken') email: string,
     @Body("perfil") perfil: string,
@@ -73,7 +73,7 @@ export class AutenticationController {
       httpOnly: true,
       sameSite: 'strict',
       //secure: true,
-      expires: new Date(Date.now() + 1000*10)
+      expires: new Date(Date.now() + 1000*60)
     });
     return usuario
   }

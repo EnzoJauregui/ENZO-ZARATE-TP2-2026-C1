@@ -39,7 +39,8 @@ export class App {
     this.auth.cronometro.reaunudarContador();
   }
 
-  ExtenderSesion(){
-    
+  extenderSesion(){
+    this.mostrarModal.set(false);
+    this.auth.refrescarConexion();
   }
 }
