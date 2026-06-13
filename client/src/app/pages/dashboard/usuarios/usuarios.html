@@ -1,55 +1,27 @@
 <div class="admin-container">
   <header class="admin-header">
-    <h2>Panel de Administración de Usuarios</h2>
+    <h2>Panel de Administracion</h2>
   </header>
-
   <hr />
-
   <div class="admin-grid">
-    <section class="form-section">
-      <h3>Crear Nuevo Usuario</h3>
-      
-      <form (submit)="true">
-        
-        <div class="form-group">
-          <label for="nombreUsuario">Nombre de Usuario</label>
-          <input type="text" id="nombreUsuario" placeholder="Ej: enzo.zarate" required>
-        </div>
-
-        <div class="form-group">
-          <label for="correo">Correo Electronico</label>
-          <input type="email" id="correo" placeholder="correo@ejemplo.com" required>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" placeholder="••••••••" required>
-        </div>
-
-        <div class="form-group">
-          <label>Rol del Usuario</label>
-          <div class="radio-group">
-            <div class="radio-option">
-              <input type="radio" id="rolUsuario" name="rol" value="usuario" checked>
-              <label for="rolUsuario">Usuario</label>
-            </div>
-            
-            <div class="radio-option">
-              <input type="radio" id="rolAdmin" name="rol" value="administrador">
-              <label for="rolAdmin">Administrador</label>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit">Registrar Usuario</button>
-      </form>
-    </section>
+    <button class="btn btn-sm btn-secondary" (click)="toogleRegistro()">
+      {{ registrar ? "Ocultar registro" : "Crear usuario"  }}
+    </button>
+    @if(registrar){
+      <section class="form-section">
+        <h3>Crear Nuevo Usuario</h3>
+        <app-registro
+          [permitirPerfil]="true"
+          (traerTodos)="this.admin.traerUsuarios()"
+        ></app-registro>
+      </section>
+    }
 
     <section class="list-section">
       <h3>Listado de Usuarios Registrados</h3>
       
-      <div class="table-responsive">
-        <table class="table table-hover">
+      <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover w-100 table-custom mb-0 align-middle">
           <thead>
             <tr>
               <th>Nombre de Usuario</th>
@@ -58,28 +30,57 @@
               <th>Descripcion</th>
               <th>Perfil</th>
               <th>Fecha Nacimiento</th>
-              <th>Accion</th>
+              <th>Estado</th>
+              <th class="text-center">Accion</th>
             </tr>
           </thead>
           <tbody>
             @if(usuarios()){
-                @for (user of usuarios(); track user.id) {
-                  <tr>
-                    <td><strong>{{ user.nombre }}</strong></td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.descripcion }}</td>
-                    <td>
-                      <span class="badge" [class.badge-admin]="user.perfil === 'administrador'">
-                        {{ user.perfil ?? "Desconocido" }}
-                      </span>
-                    </td>
-                    <td>{{ user.fecha_nacimiento }}</td>
-                  </tr>
-                }
+              @for (user of usuarios(); track $index) {
+                <tr>
+                  <td><strong>{{ user.nombre }}</strong></td>
+                  <td class="text-muted">{{ user.email }}</td>
+                  <td>{{ user.username }}</td>
+                  <td class="text-truncate" style="max-width: 150px;">{{ user.descripcion }}</td>
+                  <td>
+                    <span 
+                      class="badge text-capitalize" 
+                      [class.badge-admin]="user.perfil === 'administrador'">
+                      {{ user.perfil }}
+                    </span>
+                  </td>
+                  <td>{{ user.fecha_nacimiento }}</td>
+                  <td> 
+                    <span 
+                      class="badge" 
+                      [class.bg-success-subtle]="!user.fecha_baja" 
+                      [class.text-success]="!user.fecha_baja"
+                      [class.bg-danger-subtle]="user.fecha_baja" 
+                      [class.text-danger]="user.fecha_baja"
+                    >
+                      {{ user.fecha_baja ? "Baja" : "Alta" }}
+                    </span>
+                  </td>
+                  <td>
+                      <button
+                        class="btn"
+                        [class.btn-success]="!user.fecha_baja"
+                        [class.btn-danger]="user.fecha_baja"
+                        [title]="user.fecha_baja ? 'Dar de alta' : 'Dar de baja'"
+                        type="button"
+                        (click)="modificarUsuario(user._id)"
+                      >
+                        <i class="bi"
+                        [class.bi-check-circle-fill]="user.fecha_baja"
+                        [class.bi-x-circle-fill]="!user.fecha_baja"
+                        ></i>
+                      </button>
+                  </td>
+                </tr>
+              }
             } @else {
               <tr>
-                <td colspan="4" class="empty-table">
+                <td colspan="8" class="text-center py-4 text-muted small">
                   No hay usuarios registrados en el sistema.
                 </td>
               </tr>

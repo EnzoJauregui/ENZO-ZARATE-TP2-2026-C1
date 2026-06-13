@@ -118,7 +118,8 @@
             type="password"
             class="form-control"
             [class.input-error]="
-              formulario.get('repetirPassword')?.invalid && formulario.get('repetirPassword')?.touched
+              formulario.get('repetirPassword')?.invalid &&
+              formulario.get('repetirPassword')?.touched
             "
             formControlName="repetirPassword"
             placeholder="********"
@@ -133,7 +134,7 @@
                 <span>Minimo 8 caracteres</span>
               } @else if (formulario.get('repetirPassword')?.errors?.['pattern']) {
                 <span>Debe tener almenos una letra mayuscula y un numero</span>
-              } @else if(this.verificarConstrasenias()){
+              } @else if (this.verificarConstrasenias()) {
                 <span>Las contrasenias no coinciden</span>
               }
             </div>
@@ -154,7 +155,8 @@
             "
           />
           @if (
-            formulario.get('fecha_nacimiento')?.invalid && formulario.get('fecha_nacimiento')?.touched
+            formulario.get('fecha_nacimiento')?.invalid &&
+            formulario.get('fecha_nacimiento')?.touched
           ) {
             <div class="error-text">
               @if (formulario.get('fecha_nacimiento')?.errors?.['required']) {
@@ -162,19 +164,38 @@
               }
             </div>
           }
-          </div>
+        </div>
+        @if(this.permitirPerfil()){
           <div class="col-md-6">
-            <label class="form-label fw-semibold small">Tipo de Perfil</label>
-            <select
-              class="form-select"
-              formControlName="perfil"
+            <label class="form-label fw-semibold small d-block mb-2">Tipo de Perfil</label>
+            <div
               [class.input-error]="
                 formulario.get('perfil')?.invalid && formulario.get('perfil')?.touched
               "
+              class="p-2 rounded"
             >
-              <option value="usuario">Usuario</option>
-              <option value="administrador">Administrador</option>
-            </select>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="perfilUsuario"
+                  value="usuario"
+                  formControlName="perfil"
+                />
+                <label class="form-check-label" for="perfilUsuario">Usuario</label>
+              </div>
+  
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="perfilAdmin"
+                  value="administrador"
+                  formControlName="perfil"
+                />
+                <label class="form-check-label" for="perfilAdmin">Administrador</label>
+              </div>
+            </div>
             @if (formulario.get('perfil')?.invalid && formulario.get('perfil')?.touched) {
               <div class="error-text">
                 @if (formulario.get('perfil')?.errors?.['required']) {
@@ -183,14 +204,14 @@
               </div>
             }
           </div>
-        
+        }
 
         <div class="mb-3">
           <label class="form-label fw-semibold small">Foto de Perfil</label>
-          <input 
-            type="file"  
-            accept="image/*" 
-            class="form-control" 
+          <input
+            type="file"
+            accept="image/*"
+            class="form-control"
             (change)="archivoSeleccionado($event)"
           />
           <div class="form-text">Formatos recomendados: JPG, PNG.</div>
@@ -218,15 +239,21 @@
           }
         </div>
 
-        <button type="submit" class="btn btn-dark w-100 py-2.5 fw-bold mb-3" [disabled]="!formulario.valid || !this.auth.imagen_subida">
-          {{ formulario.valid ? 'Registrarse' : 'Completa los datos' }}</button>
-
-        <p class="text-center mb-0 small text-muted">
-          ¿Ya tenes una cuenta?
-          <button routerLink="/auth/login" class="btn btn-sm btn-secondary">
-            Inicia sesion aca
-          </button>
-        </p>
+        <button
+          type="submit"
+          class="btn btn-dark w-100 py-2.5 fw-bold mb-3"
+          [disabled]="!formulario.valid || !this.auth.imagen_subida"
+        >
+          {{ formulario.valid ? 'Registrarse' : 'Completa los datos' }}
+        </button>
+        @if(!permitirPerfil()){
+          <p class="text-center mb-0 small text-muted">
+            ¿Ya tenes una cuenta?
+            <button routerLink="/auth/login" class="btn btn-sm btn-secondary">
+              Inicia sesion aca
+            </button>
+          </p>
+        }
       </div>
     </form>
   </div>

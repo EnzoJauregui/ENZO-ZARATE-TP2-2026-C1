@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, input, output, InputSignal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Modal } from '../../../components/modal/modal';
@@ -15,7 +15,8 @@ export class Registro {
   auth = inject(AuthService);
   mensajeError = signal<string>("Error");
   mostrarModal = signal<boolean>(false);
-
+  permitirPerfil: InputSignal<boolean> = input(false);
+  traerTodos = output<void>()
   formulario = new FormGroup({
     email: new FormControl("", [Validators.email, Validators.required]),
     nombre: new FormControl("", [Validators.required]),
@@ -71,12 +72,17 @@ export class Registro {
     }
   }
 
+  traerUsuarios(){
+    this.traerTodos.emit()
+  }
+
   accion(){
     if(this.formulario.invalid || this.verificarConstrasenias()) return;
     
     const { repetirPassword, ...datosRegistro } = this.formulario.value;
     try{
-      this.auth.registro(datosRegistro as AuthRegistro);
+      this.auth.registro(datosRegistro as AuthRegistro, ()=>this.traerUsuarios(), !this.permitirPerfil);
+      this.formulario.reset();
     } catch (e: any){
       this.mensajeError.set(e.message);
       this.mostrarModal.set(true);

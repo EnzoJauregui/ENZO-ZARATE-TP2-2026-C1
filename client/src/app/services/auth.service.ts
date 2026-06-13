@@ -29,14 +29,18 @@ export class AuthService {
       });
   }
 
-  registro(usuario: AuthRegistro){
+  registro(usuario: AuthRegistro, callbackSuccess?: ()=>void, admin: boolean=true){
     const peticion = this.httpClient.post(environment.apiUrl+'autentication/registro',
       usuario, {
         headers: { 'Content-Type': 'application/json', }, 
         withCredentials: true
       });
       peticion.subscribe((respuesta: any) => {
-        this.manejarRespuesta(respuesta);
+        if(admin){
+          this.manejarRespuesta(respuesta);
+        } else {
+          if(callbackSuccess) callbackSuccess();
+        }
       });
   }
 
