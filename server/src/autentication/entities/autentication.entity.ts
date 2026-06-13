@@ -26,11 +26,11 @@ export class Autentication {
     @Prop({ required: true })
     fecha_nacimiento: string;
   
-    @Prop() 
+    @Prop({ default: "" }) 
     imagen_url: string;
 
-    @Prop()
-    fecha_baja?: string;
+    @Prop({ default: false })
+    fecha_baja?: boolean;
 }
 
 export const AutenticationSchema = SchemaFactory.createForClass(Autentication);

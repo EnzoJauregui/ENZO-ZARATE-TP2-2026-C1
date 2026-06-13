@@ -3,33 +3,33 @@ import { IsString, IsNotEmpty, IsEmail, IsOptional, MinLength } from "class-vali
 export class RegistroDto {
     @IsString()
     @IsNotEmpty()
-    nombre!: string;
+    nombre: string;
 
     @IsString()
     @IsNotEmpty()
-    apellido!: string;
+    apellido: string;
 
     @IsEmail()
-    email!: string;
+    email: string;
 
     @IsString()
     @MinLength(8)
-    password!: string;
+    password: string;
 
     @IsString()
     @IsNotEmpty()
-    username!: string;
+    username: string;
 
     @IsString()
     @IsNotEmpty()
-    descripcion!: string;
+    descripcion: string;
 
     @IsString()
     @IsNotEmpty()
-    perfil!: string;
+    perfil: string;
 
     @IsString()
-    fecha_nacimiento!: string
+    fecha_nacimiento: string
 
     @IsString()
     @IsOptional()

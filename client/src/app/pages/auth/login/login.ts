@@ -31,11 +31,10 @@ export class Login {
   }  
   accion(){
     if(this.formulario.invalid) return;
-    try{
-      this.auth.login(this.formulario.value as AuthLogin);
-    } catch (e: any){
-      this.mensajeError.set(e.message);
+    
+    this.auth.login(this.formulario.value as AuthLogin, (mensajeError) => {
+      this.mensajeError.set(mensajeError);
       this.mostrarModal.set(true);
-    }
+    });
   }
 }

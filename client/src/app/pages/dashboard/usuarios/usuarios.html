@@ -9,7 +9,6 @@
     </button>
     @if(registrar){
       <section class="form-section">
-        <h3>Crear Nuevo Usuario</h3>
         <app-registro
           [permitirPerfil]="true"
           (traerTodos)="this.admin.traerUsuarios()"
@@ -64,11 +63,11 @@
                   <td>
                       <button
                         class="btn"
-                        [class.btn-success]="!user.fecha_baja"
-                        [class.btn-danger]="user.fecha_baja"
+                        [class.btn-success]="user.fecha_baja"
+                        [class.btn-danger]="!user.fecha_baja"
                         [title]="user.fecha_baja ? 'Dar de alta' : 'Dar de baja'"
                         type="button"
-                        (click)="modificarUsuario(user._id)"
+                        (click)="modificarUsuario(user._id, !user.fecha_baja)"
                       >
                         <i class="bi"
                         [class.bi-check-circle-fill]="user.fecha_baja"

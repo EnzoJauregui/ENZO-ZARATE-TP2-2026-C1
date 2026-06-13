@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { RegistroDto } from './dto/registro.dto';
 import { LoginDto } from './dto/login.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -29,6 +29,8 @@ export class AutenticationService {
     const validarPassword = await bcryptjs.compare(loginDto.password, usuario.password)
     if (!validarPassword) throw new UnauthorizedException('Contraseña invalida');
 
+    if(usuario.fecha_baja == true) throw new ForbiddenException("Tu cuenta ha sido dada de baja");
+
     usuario.password = loginDto.password;
     return this.crearToken(usuario);
   }
@@ -55,7 +57,7 @@ export class AutenticationService {
     const token: string = sign(payload, process.env.CLAVE_SECRETA!, {
       algorithm: 'HS256',
       audience: 'registro',
-      expiresIn: '20s',
+      expiresIn: '20m',
     });
     return { token, usuario };
   }
@@ -63,9 +65,5 @@ export class AutenticationService {
   async traerTodos() {
     const todos = await this.AutenticationModel.find();
     return todos;
-  }
-  
-  remove(id: number) {
-    return `This action removes a #${id} autentication`;
   }
 }

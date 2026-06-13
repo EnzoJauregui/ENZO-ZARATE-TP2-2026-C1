@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Res, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Post, Body, Req, Res, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AutenticationService } from './autentication.service';
 import { RegistroDto } from './dto/registro.dto';
 import { LoginDto } from './dto/login.dto';
@@ -56,19 +56,14 @@ export class AutenticationController {
     return usuario
   }
 
-  @Get()
-  traerUsuarios(){
-    return this.autenticationService.traerTodos();
-  }
-
   @UseGuards(JtwGuard)
   @Post("/refresh")
   async refrescarToken(
-    @Body('emailDelToken') email: string,
-    @Body("perfil") perfil: string,
+    @Req() request: Request,
     @Res({ passthrough: true }) response: Response
   ) {
-    const {token, usuario} = await this.autenticationService.refrescarToken(email);
+    const userToken = request["usuario"] as {email: string; perfil: string};
+    const {token, usuario} = await this.autenticationService.refrescarToken(userToken.email);
     response.cookie("Authorization", token, {
       httpOnly: true,
       sameSite: 'strict',
@@ -81,10 +76,10 @@ export class AutenticationController {
   @UseGuards(JtwGuard)
   @Post('/autorizar')
   async autorizarUsuario(
-    @Body('emailDelToken') email: string,
-    @Body('perfil') perfil: string
+    @Req() request: Request
   ) {
-    const usuario = await this.autenticationService.obtenerUsuarioPorEmail(email);
+    const userToken = request["usuario"] as {email: string; peril: string}
+    const usuario = await this.autenticationService.obtenerUsuarioPorEmail(userToken.email);
     return {
       valido: true,
       usuario

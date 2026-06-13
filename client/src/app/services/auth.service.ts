@@ -18,15 +18,21 @@ export class AuthService {
   url_imagen = signal<string>("");
   imagen_subida = signal<boolean>(true);
   
-  login(usuario: AuthLogin){
-      const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
-       usuario, {
-        headers: { 'Content-Type': 'application/json', }, 
-        withCredentials: true
-      });
-      peticion.subscribe((respuesta: any) => {
-        this.manejarRespuesta(respuesta);
-      });
+  login(usuario: AuthLogin, callbackError?: (msg: string) => void){
+    const peticion = this.httpClient.post(environment.apiUrl+'autentication/login',
+      usuario, {
+      headers: { 'Content-Type': 'application/json', }, 
+      withCredentials: true
+    });
+    peticion.subscribe({
+      next: (res) => {
+        this.manejarRespuesta(res);
+      }, 
+      error: (err) => {
+        const mensaje = err.error?.message || "Error al iniciar sesion";
+        if(callbackError) callbackError(mensaje);
+      }
+    });
   }
 
   registro(usuario: AuthRegistro, callbackSuccess?: ()=>void, admin: boolean=true){
@@ -61,6 +67,7 @@ export class AuthService {
         this.usuario.set(res.usuario);
         this.cronometro.iniciarContador();
         this.router.navigateByUrl("/publicaciones");
+        console.log("Conexion validada");
       }
       }, error: ()=>{
         console.log("error");

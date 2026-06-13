@@ -12,5 +12,6 @@ import { AutenticationSchema } from './entities/autentication.entity';
   ],
   controllers: [AutenticationController],
   providers: [AutenticationService],
+  exports:[MongooseModule],
 })
 export class AutenticationModule {}

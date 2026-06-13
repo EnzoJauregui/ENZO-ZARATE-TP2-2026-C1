@@ -22,7 +22,7 @@ export class Usuarios implements OnInit {
     this.registrar = !this.registrar;
   }
 
-  modificarUsuario(id: string){
-    console.log(id, " en modificacion");
+  modificarUsuario(id: string, fecha_baja: boolean){
+    this.admin.modificarUsuario(id, fecha_baja, ()=>this.admin.traerUsuarios());
   }
 }

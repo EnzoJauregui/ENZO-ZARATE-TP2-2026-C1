@@ -31,12 +31,7 @@ export class JtwGuard implements CanActivate {
       const tokenValidado = verify(token,  process.env.CLAVE_SECRETA!);
       const { email, perfil } = tokenValidado as {email: string, perfil: string}
 
-      if(!request.body) {
-        request.body = { email, perfil };
-      } else {
-        request.body.emailDelToken = email;
-        request.body.perfil = perfil
-      }
+      request["usuario"] = {email, perfil}
       return true;
     } catch(error){
       if(error instanceof TokenExpiredError) throw new UnauthorizedException('El token ha expirado');

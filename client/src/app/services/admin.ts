@@ -11,7 +11,7 @@ export class AdminService {
   usuarios = signal<any>(null);
 
   traerUsuarios(){
-    const peticion = this.http.get(environment.apiUrl+"autentication", 
+    const peticion = this.http.get(environment.apiUrl+"usuarios", 
       { withCredentials:true });
     peticion.subscribe(((res)=>{
       this.usuarios.set(res);
