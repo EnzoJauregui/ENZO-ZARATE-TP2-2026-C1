@@ -16,6 +16,10 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": {
+              "base": "dist/client"
+            },
+            "index": "src/index.html",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -31,7 +35,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.development.ts",
-                  "with": "src/environments/environment.production.ts" 
+                  "with": "src/environments/environment.ts" 
                 }
               ],
               "budgets": [
