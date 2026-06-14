@@ -29,7 +29,7 @@ export class JwtGuard implements CanActivate {
     
     try{
       const claveSecreta= "ASLAMDS78789uadnasac@@asc";
-      const tokenValidado = verify(token, claveSecreta);
+      const tokenValidado = verify(token, claveSecreta, {audience: 'registro'});
       const { email, perfil } = tokenValidado as {email: string, perfil: string}
 
       request["usuario"] = {email, perfil}
