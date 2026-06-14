@@ -78,16 +78,12 @@ export class AuthService {
 
   cerrarSesion(){
     this.usuario.set(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
     this.cronometro.reiniciarContador();
     this.router.navigateByUrl("/auth/login");
   }
 
   manejarRespuesta(respuesta: any){
     this.usuario.set(respuesta);
-    localStorage.setItem('token', respuesta.token);
-    localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
     this.cronometro.iniciarContador();
     console.log(this.usuario());
     this.router.navigateByUrl("/mi-perfil");

@@ -28,12 +28,8 @@ export class JwtGuard implements CanActivate {
     if(!token) throw new BadRequestException('Falta el encabezado de autorizaacion o la cookie de la sesion');
     
     try{
-      const claveSecreta= "ASLAMDS78789uadnasac@@asc";
-      const tokenValidado = verify(token, claveSecreta, 
-        { 
-          algorithms: ['HS256'],
-          audience: 'registro'
-        });
+      const claveSecreta ="ASLAMDS78789uadnasac@@asc";
+      const tokenValidado = verify(token, claveSecreta);
       const { email, perfil } = tokenValidado as {email: string, perfil: string}
 
       request["usuario"] = {email, perfil}
