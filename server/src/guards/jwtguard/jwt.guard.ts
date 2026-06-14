@@ -4,7 +4,7 @@ import type { Request } from 'express';
 import { JsonWebTokenError, TokenExpiredError, verify } from 'jsonwebtoken';
 
 @Injectable()
-export class JtwGuard implements CanActivate {
+export class JwtGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {

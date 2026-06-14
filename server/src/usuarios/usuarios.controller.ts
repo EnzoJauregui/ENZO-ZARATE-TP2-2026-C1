@@ -1,11 +1,11 @@
 import { Controller, Get, Body, Patch, Param, UseGuards } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { JtwGuard } from '@/guards/jtwguard/jtwguard.guard';
+import { JwtGuard } from '@/guards/jwtguard/jwt.guard';
 import { AdminGuard } from '@/guards/admin/admin.guard';
 
 @Controller('usuarios')
-@UseGuards(JtwGuard, AdminGuard)
+@UseGuards(JwtGuard, AdminGuard)
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
