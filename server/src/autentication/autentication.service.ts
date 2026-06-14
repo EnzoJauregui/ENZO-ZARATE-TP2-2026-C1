@@ -54,7 +54,8 @@ export class AutenticationService {
       email: usuario.email,
       perfil: usuario.perfil,
     };
-    const token: string = sign(payload, "ASLAMDS78789uadnasac@@asc", {
+    const claveSecreta = "ASLAMDS78789uadnasac@@asc";
+    const token: string = sign(payload, claveSecreta, {
       algorithm: 'HS256',
       audience: 'registro',
       expiresIn: '20m',
