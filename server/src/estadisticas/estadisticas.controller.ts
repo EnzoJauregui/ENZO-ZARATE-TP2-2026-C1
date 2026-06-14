@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { EstadisticasService } from './estadisticas.service';
-import { JwtGuard } from '@/guards/jwtguard/jwt.guard';
-import { AdminGuard } from '@/guards/admin/admin.guard';
+import { JwtGuard } from '../guards/jwtguard/jwt.guard';
+import { AdminGuard } from '../guards/admin/admin.guard';
 
 @Controller('estadisticas')
 @UseGuards(JwtGuard, AdminGuard)

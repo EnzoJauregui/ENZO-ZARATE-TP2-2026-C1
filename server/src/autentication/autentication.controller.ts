@@ -3,7 +3,7 @@ import { AutenticationService } from './autentication.service';
 import { RegistroDto } from './dto/registro.dto';
 import { LoginDto } from './dto/login.dto';
 import type { Response } from 'express';
-import { JwtGuard } from '@/guards/jwtguard/jwt.guard';
+import { JwtGuard } from '../guards/jwtguard/jwt.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v2 as cloudinary } from "cloudinary"
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
