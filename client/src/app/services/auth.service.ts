@@ -84,6 +84,7 @@ export class AuthService {
 
   manejarRespuesta(respuesta: any){
     this.usuario.set(respuesta);
+    localStorage.setItem('token', respuesta.token);
     this.cronometro.iniciarContador();
     console.log(this.usuario());
     this.router.navigateByUrl("/mi-perfil");
