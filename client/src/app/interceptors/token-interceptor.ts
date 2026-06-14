@@ -5,8 +5,15 @@ import { catchError, throwError } from 'rxjs';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
-
-  const cloneReq = req.clone({ withCredentials: true });
+  const token = localStorage.getItem('token');
+  let cloneReq = req.clone({ withCredentials: true });
+  if (token) {
+    cloneReq = cloneReq.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
 
   return next(cloneReq).pipe(
     catchError((error: HttpErrorResponse) => {
