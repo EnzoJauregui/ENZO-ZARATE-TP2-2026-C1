@@ -12,7 +12,10 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors( { 
-    origin: process.env.LOCALHOST ,
+    origin: [
+      process.env.LOCALHOST,
+      process.env.VERCEL, 
+    ],
     credentials: true
   });
   await app.listen(process.env.PORT ?? 3000);
