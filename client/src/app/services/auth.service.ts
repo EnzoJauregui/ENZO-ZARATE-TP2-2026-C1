@@ -78,6 +78,8 @@ export class AuthService {
 
   cerrarSesion(){
     this.usuario.set(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
     this.cronometro.reiniciarContador();
     this.router.navigateByUrl("/auth/login");
   }
