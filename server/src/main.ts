@@ -16,6 +16,7 @@ async function bootstrap() {
       process.env.LOCALHOST,
       process.env.VERCEL || "'https://front-f8vrizs32-enzo-mt-97.vercel.app'", 
     ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true
   });
   await app.listen(process.env.PORT ?? 3000);
