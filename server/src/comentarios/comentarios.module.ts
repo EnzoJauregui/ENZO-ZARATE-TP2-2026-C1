@@ -12,5 +12,6 @@ import { ComentarioSchema } from './entities/comentario.entity';
   ],
   controllers: [ComentariosController],
   providers: [ComentariosService],
+  exports: [MongooseModule],
 })
 export class ComentariosModule {}

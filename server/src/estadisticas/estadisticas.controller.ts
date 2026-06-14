@@ -1,34 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { EstadisticasService } from './estadisticas.service';
 import { CreateEstadisticaDto } from './dto/create-estadistica.dto';
 import { UpdateEstadisticaDto } from './dto/update-estadistica.dto';
+import { JtwGuard } from '@/guards/jtwguard/jtwguard.guard';
+import { AdminGuard } from '@/guards/admin/admin.guard';
 
 @Controller('estadisticas')
+@UseGuards(JtwGuard, AdminGuard)
 export class EstadisticasController {
   constructor(private readonly estadisticasService: EstadisticasService) {}
 
-  @Post()
-  create(@Body() createEstadisticaDto: CreateEstadisticaDto) {
-    return this.estadisticasService.create(createEstadisticaDto);
+  @Get('/comentarios')
+  traerComentarios() {
+    return this.estadisticasService.traerComentarios();
   }
 
-  @Get()
-  findAll() {
-    return this.estadisticasService.findAll();
+  @Get('/publicaciones')
+  traerPublicaciones() {
+    return this.estadisticasService.traerPublicaciones();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.estadisticasService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEstadisticaDto: UpdateEstadisticaDto) {
-    return this.estadisticasService.update(+id, updateEstadisticaDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.estadisticasService.remove(+id);
+  @Get('/usuarios')
+  traerUsuarios(){
+    return this.estadisticasService.traerUsuarios();
   }
 }
