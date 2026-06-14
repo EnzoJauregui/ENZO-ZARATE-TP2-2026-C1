@@ -14,7 +14,7 @@ async function bootstrap() {
   app.enableCors( { 
     origin: [
       process.env.LOCALHOST,
-      process.env.VERCEL || "'https://front-f8vrizs32-enzo-mt-97.vercel.app'", 
+      /https:\/\/.*\.vercel\.app$/, 
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true
