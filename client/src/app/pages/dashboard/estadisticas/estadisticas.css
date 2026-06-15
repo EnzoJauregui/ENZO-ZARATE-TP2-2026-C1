@@ -1,21 +1,13 @@
 .chart-card{
     background: rgba(255,255,255,0.05); 
-    padding: 15px; 
-    border-radius: 8px; 
+    border: none;
+    position: relative;
 }
 
-.filter-range{
-    margin: 10px 0; 
-    display: flex; 
-    gap: 15px;
+.dashboard-container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.charts-grid{
-    display: grid;
-    gap: 30px;
-}
 
-h3{
-    font-size: 16px; 
-    margin-top: 0;
-}
