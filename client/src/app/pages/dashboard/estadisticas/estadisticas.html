@@ -1,6 +1,27 @@
-<div class="admin-container">
-  <header class="admin-header">
-    <h2>Panel de Estadisticas</h2>
-  </header>
-  <hr />
+<div class="dashboard-container">
+  <h2>Panel de Estadisticas</h2>
+<hr/>
+  <div class="filter-range" >
+    <label>Desde: <input type="date" [ngModel]="fechaInicio()" (ngModelChange)="fechaInicio.set($event)"></label>
+    <label>Hasta: <input type="date" [ngModel]="fechaFin()" (ngModelChange)="fechaFin.set($event)"></label>
+  </div>
+
+  <div class="charts-grid">
+    
+    <div class="chart-card">
+      <h3>Publicaciones por Autor (Barras)</h3>
+      <canvas #graficoCanvas></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3 style="font-size: 16px; margin-top: 0;">Distribucion de Contenido (Torta)</h3>
+      <canvas #graficoCanvas2></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Tendencia de Actividad (Líneas)</h3>
+      <canvas #graficoCanvas3></canvas>
+    </div>
+
+  </div>
 </div>

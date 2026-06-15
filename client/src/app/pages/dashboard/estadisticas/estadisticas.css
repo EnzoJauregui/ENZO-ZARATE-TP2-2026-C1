@@ -1,0 +1,21 @@
+.chart-card{
+    background: rgba(255,255,255,0.05); 
+    padding: 15px; 
+    border-radius: 8px; 
+}
+
+.filter-range{
+    margin: 10px 0; 
+    display: flex; 
+    gap: 15px;
+}
+
+.charts-grid{
+    display: grid;
+    gap: 30px;
+}
+
+h3{
+    font-size: 16px; 
+    margin-top: 0;
+}

@@ -9,12 +9,32 @@ export class AdminService {
   http = inject(HttpClient);
 
   usuarios = signal<any>(null);
+  publicaciones = signal<any>(null);
+  comentarios = signal<any>(null);
 
   traerUsuarios(){
     const peticion = this.http.get(environment.apiUrl+"usuarios", 
       { withCredentials:true });
     peticion.subscribe(((res)=>{
       this.usuarios.set(res);
+      console.log(this.usuarios());
+    }))
+  }
+
+  traerPublicaciones(){
+    const peticion = this.http.get(environment.apiUrl+"estadisticas/publicaciones", 
+      { withCredentials:true });
+    peticion.subscribe(((res)=>{
+      this.publicaciones.set(res);
+      console.log(this.usuarios());
+    }))
+  }
+
+  traerComentarios(){
+    const peticion = this.http.get(environment.apiUrl+"estadisticas/comentarios", 
+      { withCredentials:true });
+    peticion.subscribe(((res)=>{
+      this.comentarios.set(res);
       console.log(this.usuarios());
     }))
   }
