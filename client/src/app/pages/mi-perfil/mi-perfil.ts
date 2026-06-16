@@ -2,10 +2,11 @@ import { Component, effect, inject } from '@angular/core';
 import { Card } from "../../components/card/card";
 import { AuthService } from '../../services/auth.service';
 import { PublicacionService } from '../../services/publicacion.service';
+import { FechaPipe } from '../../pipes/fecha-pipe';
 
 @Component({
   selector: 'app-mi-perfil',
-  imports: [Card],
+  imports: [Card, FechaPipe],
   templateUrl: './mi-perfil.html',
   styleUrl: './mi-perfil.css',
 })

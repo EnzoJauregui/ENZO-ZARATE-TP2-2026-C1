@@ -1,14 +1,15 @@
 import { Component, input, InputSignal, signal, inject, output } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { PublicacionService } from '../../services/publicacion.service';
 import { IPublicacion } from '../../pages/publicaciones/publicacion.interface';
 import { Modal } from '../modal/modal';
 import { Router } from '@angular/router';
+import { FechaPipe } from '../../pipes/fecha-pipe';
+import { EmailAvatarPipe } from '../../pipes/email-avatar-pipe';
 
 @Component({
   selector: 'app-card',
-  imports: [ReactiveFormsModule, DatePipe, Modal],
+  imports: [ReactiveFormsModule, FechaPipe, EmailAvatarPipe, Modal],
   templateUrl: './card.html',
   styleUrl: './card.css',
 })

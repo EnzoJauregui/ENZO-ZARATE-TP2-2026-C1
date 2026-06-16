@@ -1,12 +1,13 @@
-import { Component, inject, input, InputSignal, output, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, inject, input, InputSignal, output } from '@angular/core';
 import { IComentario } from '../../pages/publicacion/comentario.id.interface';
 import { ComentariosService } from '../../services/comentarios.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FechaPipe } from '../../pipes/fecha-pipe';
+import { EmailAvatarPipe } from '../../pipes/email-avatar-pipe';
 
 @Component({
   selector: 'app-comentario',
-  imports: [DatePipe, ReactiveFormsModule],
+  imports: [FechaPipe, ReactiveFormsModule, EmailAvatarPipe],
   templateUrl: './comentario.html',
   styleUrl: './comentario.css',
 })

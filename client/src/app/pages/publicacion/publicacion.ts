@@ -8,10 +8,11 @@ import { PublicacionService } from '../../services/publicacion.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComentariosService } from '../../services/comentarios.service';
+import { FechaPipe } from '../../pipes/fecha-pipe';
 
 @Component({
   selector: 'app-publicacion',
-  imports: [ReactiveFormsModule, DatePipe, Comentario],
+  imports: [ReactiveFormsModule, FechaPipe, Comentario],
   templateUrl: './publicacion.html',
   styleUrl: './publicacion.css',
 })

@@ -2,8 +2,8 @@
   <div class="card shadow-sm">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-2 text-dark">
-        <div>
-          <span class="fw-bold d-block small">{{ publicacion().email_autor }}</span>
+        <div class="avatar-vircle"> {{ publicacion().email_autor | emailAvatar }}
+          <span class="fw-bold d-block small">{{ publicacion().email_autor}}</span>
         </div>
         <button 
           class="btn btn-outline-dark p-1 border-0" 
@@ -17,7 +17,7 @@
       <div class="d-flex justify-content-between align-items-baseline mb-2">
       <h5 class="card-title fw-bold mb-0">{{ publicacion().titulo }}</h5>
       <small class="text-muted" style="font-size: 0.8rem;">
-        {{ publicacion().fecha_publicacion | date:'dd/MM/yy HH:mm' }}
+        {{ publicacion().fecha_publicacion | fechaPipe }}
       </small>
       </div>
       <p class="card-text text-muted">

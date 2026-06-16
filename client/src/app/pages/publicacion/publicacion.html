@@ -7,7 +7,7 @@
     <div class="card-header d-flex align-items-center justify-content-between border-bottom-0 pt-3">
       <div class="ms-2">
         <h6 class="mb-0 fw-bold text-dark">{{ publicacion().email_autor }}</h6>
-        <small class="text-muted">{{ publicacion().fecha_publicacion | date: 'dd/MM/yyyy' }}</small>
+        <small class="text-muted">{{ publicacion().fecha_publicacion | fechaPipe }}</small>
         <div class="my-2">
           <p class="card-text fw-bold">
             {{ publicacion().contenido }}

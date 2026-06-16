@@ -4,9 +4,11 @@
       class="card-comentarios flex-grow-1 p-2 rounded shadow-sm"
     >
       <div class="d-flex justify-content-between align-items-baseline mb-1">
-        <span class="fw-bold d-block small">{{ comentario().email_autor }}</span>
+        <div class="avatar-vircle"> {{ comentario().email_autor | emailAvatar }}
+          <span class="fw-bold d-block small">{{ comentario().email_autor}}</span>
+        </div>
         <small class="text-muted" style="font-size: 0.75rem;">
-          {{ comentario().fecha_creacion | date:'dd/MM/yy HH:mm' }}
+          {{ comentario().fecha_creacion | fechaPipe }}
         </small>
       </div>
       <div class="d-flex justify-content-between align-items-end">

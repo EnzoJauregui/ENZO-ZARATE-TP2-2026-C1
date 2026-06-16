@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin';
 import { Registro } from '../../auth/registro/registro';
+import { FechaPipe } from '../../../pipes/fecha-pipe';
+import { RecortarTextoPipe } from '../../../pipes/recortar-texto-pipe';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [Registro],
+  imports: [Registro, FechaPipe, RecortarTextoPipe],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css',
 })

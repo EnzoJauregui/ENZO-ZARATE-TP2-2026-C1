@@ -40,7 +40,7 @@
                   <td><strong>{{ user.nombre }}</strong></td>
                   <td class="text-muted">{{ user.email }}</td>
                   <td>{{ user.username }}</td>
-                  <td class="text-truncate" style="max-width: 150px;">{{ user.descripcion }}</td>
+                  <td >{{ user.descripcion | recortarTexto:7}}</td>
                   <td>
                     <span 
                       class="badge text-capitalize" 
@@ -48,7 +48,7 @@
                       {{ user.perfil }}
                     </span>
                   </td>
-                  <td>{{ user.fecha_nacimiento }}</td>
+                  <td>{{ user.fecha_nacimiento | fechaPipe }}</td>
                   <td> 
                     <span 
                       class="badge" 
