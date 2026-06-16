@@ -59,7 +59,7 @@ export class AutenticationService {
     const token: string = sign(payload, claveSecreta, {
       algorithm: 'HS256',
       audience: 'registro',
-      expiresIn: '20m',
+      expiresIn: '40s',
     });
     return { token, usuario };
   }

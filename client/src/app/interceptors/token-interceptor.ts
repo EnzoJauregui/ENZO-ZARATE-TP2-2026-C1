@@ -17,7 +17,6 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(cloneReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      console.log(error);
       if(error.status === 401){
         console.log("token expirado");
         auth.cerrarSesion();

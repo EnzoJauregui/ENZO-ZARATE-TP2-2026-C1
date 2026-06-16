@@ -9,8 +9,8 @@ export class Cronometro {
   tiempoMaximoFinalAlcanzado = signal<boolean>(false);
   extenderTiempo = signal<boolean>(false);
 
-  tiempoMaximo: number = 1000;   
-  tiempoMaximoFinal: number = 2500;
+  tiempoMaximo: number = 30;   
+  tiempoMaximoFinal: number = 41;
   intervalo: number | null = null
 
   tiempoAMostrar = computed(() => {
