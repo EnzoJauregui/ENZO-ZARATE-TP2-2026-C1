@@ -4,10 +4,12 @@ import { RouterLink } from '@angular/router';
 import { Modal } from '../../../components/modal/modal';
 import { AuthRegistro } from '../auth-interfaces/authRegistro.interface';
 import { AuthService } from '../../../services/auth.service';
+import { CambiarBorde } from "../../../directivas/cambiar-borde";
+import { ZoomMouse } from "../../../directivas/zoom-mouse";
 
 @Component({
   selector: 'app-registro',
-  imports: [ReactiveFormsModule, RouterLink, Modal],
+  imports: [ReactiveFormsModule, RouterLink, Modal, CambiarBorde, ZoomMouse],
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })

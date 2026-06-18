@@ -6,10 +6,12 @@ import { Modal } from '../modal/modal';
 import { Router } from '@angular/router';
 import { FechaPipe } from '../../pipes/fecha-pipe';
 import { EmailAvatarPipe } from '../../pipes/email-avatar-pipe';
+import { ZoomMouse } from "../../directivas/zoom-mouse";
+import { EscalarTexto } from '../../directivas/escalar-texto';
 
 @Component({
   selector: 'app-card',
-  imports: [ReactiveFormsModule, FechaPipe, EmailAvatarPipe, Modal],
+  imports: [ReactiveFormsModule, FechaPipe, EmailAvatarPipe, Modal, ZoomMouse, EscalarTexto],
   templateUrl: './card.html',
   styleUrl: './card.css',
 })

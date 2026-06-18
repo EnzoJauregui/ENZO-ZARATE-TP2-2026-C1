@@ -9,10 +9,11 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComentariosService } from '../../services/comentarios.service';
 import { FechaPipe } from '../../pipes/fecha-pipe';
+import { EscalarTexto } from '../../directivas/escalar-texto';
 
 @Component({
   selector: 'app-publicacion',
-  imports: [ReactiveFormsModule, FechaPipe, Comentario],
+  imports: [ReactiveFormsModule, FechaPipe, Comentario, EscalarTexto],
   templateUrl: './publicacion.html',
   styleUrl: './publicacion.css',
 })

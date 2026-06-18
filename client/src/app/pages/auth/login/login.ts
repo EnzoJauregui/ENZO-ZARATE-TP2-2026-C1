@@ -4,10 +4,12 @@ import { RouterLink } from '@angular/router';
 import { Modal } from '../../../components/modal/modal';
 import { AuthService } from '../../../services/auth.service';
 import { AuthLogin } from '../auth-interfaces/authLogin.interface';
+import { CambiarBorde } from "../../../directivas/cambiar-borde";
+import { ZoomMouse } from "../../../directivas/zoom-mouse";
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink, Modal],
+  imports: [ReactiveFormsModule, RouterLink, Modal, CambiarBorde, ZoomMouse],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

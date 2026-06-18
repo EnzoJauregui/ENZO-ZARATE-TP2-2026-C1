@@ -1,5 +1,5 @@
 <div class="container my-5 d-flex justify-content-center">
-  <div class="card shadow-sm p-4 w-100" style="max-width: 750px; border-radius: 16px">
+  <div class="card shadow-sm p-4 w-100" appZoomMouse style="max-width: 750px; border-radius: 16px">
     <h2 class="text-center mb-2 fw-bold text-dark">Ingresar Cuenta</h2>
 
     <form [formGroup]="formulario" (ngSubmit)="accion()">
@@ -9,6 +9,7 @@
           <input
             type="email"
             class="form-control"
+            appCambiarBorde
             [class.input-error]="
               formulario.get('email')?.invalid && formulario.get('email')?.touched
             "
@@ -34,6 +35,7 @@
           <input
             type="password"
             class="form-control"
+            appCambiarBorde
             [class.input-error]="
               formulario.get('password')?.invalid && formulario.get('password')?.touched
             "

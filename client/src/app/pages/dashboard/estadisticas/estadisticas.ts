@@ -5,12 +5,13 @@ import { Chart, registerables } from 'chart.js';
 import { AdminService } from '../../../services/admin';
 import { IPublicacion } from '../../publicaciones/publicacion.interface';
 import { IComentario } from '../../publicacion/comentario.id.interface';
+import { ZoomMouse } from "../../../directivas/zoom-mouse";
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-estadisticas',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ZoomMouse],
   templateUrl: './estadisticas.html',
   styleUrl: './estadisticas.css',
 })

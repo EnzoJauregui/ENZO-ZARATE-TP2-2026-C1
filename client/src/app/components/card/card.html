@@ -1,9 +1,10 @@
-<div class="publicaion mb-4" >
+<div class="publicaion mb-4" appZoomMouse>
   <div class="card shadow-sm">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-2 text-dark">
         <div class="avatar-vircle"> {{ publicacion().email_autor | emailAvatar }}
-          <span class="fw-bold d-block small">{{ publicacion().email_autor}}</span>
+          <span class="fw-bold d-block small" 
+            appEscalarTexto [tamañoMaximo]="'18px'">{{ publicacion().email_autor}}</span>
         </div>
         <button 
           class="btn btn-outline-dark p-1 border-0" 
@@ -20,7 +21,7 @@
         {{ publicacion().fecha_publicacion | fechaPipe }}
       </small>
       </div>
-      <p class="card-text text-muted">
+      <p class="card-text text-muted" appEscalarTexto>
         {{ publicacion().contenido }}
       </p>
     </div>

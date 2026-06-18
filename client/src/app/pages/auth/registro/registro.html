@@ -1,5 +1,5 @@
 <div class="container my-5 d-flex justify-content-center">
-  <div class="card shadow-sm p-4 w-100" style="max-width: 750px; border-radius: 16px">
+  <div class="card shadow-sm p-4 w-100" appZoomMouse style="max-width: 750px; border-radius: 16px">
     <h2 class="text-center mb-2 fw-bold text-dark">Crear Cuenta</h2>
 
     <form [formGroup]="formulario" (ngSubmit)="accion()">
@@ -31,6 +31,7 @@
             [class.input-error]="
               formulario.get('apellido')?.invalid && formulario.get('apellido')?.touched
             "
+            appCambiarBorde
             formControlName="apellido"
             placeholder="Ej: Garcia"
           />
@@ -54,6 +55,7 @@
               formulario.get('email')?.invalid && formulario.get('email')?.touched
             "
             formControlName="email"
+            appCambiarBorde
             placeholder="correo@ejemplo.com"
           />
           @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
@@ -99,6 +101,7 @@
             "
             formControlName="password"
             placeholder="********"
+            appCambiarBorde
           />
           @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
             <div class="error-text">
@@ -123,6 +126,7 @@
             "
             formControlName="repetirPassword"
             placeholder="********"
+            appCambiarBorde
           />
           @if (
             formulario.get('repetirPassword')?.invalid && formulario.get('repetirPassword')?.touched
@@ -149,6 +153,7 @@
             type="date"
             class="form-control"
             formControlName="fecha_nacimiento"
+            appCambiarBorde
             [class.input-error]="
               formulario.get('fecha_nacimiento')?.invalid &&
               formulario.get('fecha_nacimiento')?.touched
@@ -181,6 +186,7 @@
                   id="perfilUsuario"
                   value="usuario"
                   formControlName="perfil"
+                  appCambiarBorde
                 />
                 <label class="form-check-label" for="perfilUsuario">Usuario</label>
               </div>
@@ -192,6 +198,7 @@
                   id="perfilAdmin"
                   value="administrador"
                   formControlName="perfil"
+                  appCambiarBorde
                 />
                 <label class="form-check-label" for="perfilAdmin">Administrador</label>
               </div>
@@ -212,6 +219,7 @@
             type="file"
             accept="image/*"
             class="form-control"
+            appCambiarBorde
             (change)="archivoSeleccionado($event)"
           />
           <div class="form-text">Formatos recomendados: JPG, PNG.</div>
@@ -222,6 +230,7 @@
           <textarea
             class="form-control"
             rows="3"
+            appCambiarBorde
             [class.input-error]="
               formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched
             "
@@ -249,7 +258,7 @@
         @if(!permitirPerfil()){
           <p class="text-center mb-0 small text-muted">
             ¿Ya tenes una cuenta?
-            <button routerLink="/auth/login" class="btn btn-sm btn-secondary">
+            <button routerLink="/auth/login" class="btn btn-sm btn-secondary" appCursor>
               Inicia sesion aca
             </button>
           </p>
